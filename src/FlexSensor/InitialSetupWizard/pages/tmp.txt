@@ -1,0 +1,25 @@
+task_move_chuck, _ = self.add_task(
+    "1.  Move chuck to the 'mark'",
+    "Use the same 'mark' in the Klayout file and on the wafer. Usually the die's edge is "
+    "a good point. Move your chuck, thus the yellow cross precisely matches "
+    "the selected mark.", "task_move_chuck*")
+layout.addWidget(task_move_chuck)
+
+
+
+
+
+
+task_set_chuck_home_position, _ = self.add_task(
+    "2.  Set Chuck Home position",
+    "Use the 'Set to Current Position' to the left to reset the "
+    "prober's coordinates to (0,0,Z)",
+    "task_set_chuck_home_position*")
+layout.addWidget(task_set_chuck_home_position)
+layout.addWidget(self.add_graphics(path=f'{self.imgf}/1_placed_at_origin_cut.JPG'))
+
+
+
+label2 = QLabel("The Prober's coordinates are now at zero.")
+label2.setWordWrap(True)
+layout.addWidget(label2)
