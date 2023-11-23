@@ -1,5 +1,5 @@
 ## Still under construction
-![](https://commons.wikimedia.org/wiki/Category:Under_construction_icons#/media/File:Baustelle-mittel.png)
+![](https://upload.wikimedia.org/wikipedia/commons/f/f0/Baustelle-mittel.png)
 
 *This repository is under construction*. It will be restructured after all individual parts are updated. 
 You can find the dependencies in the gitlab parent folder of this repo.
