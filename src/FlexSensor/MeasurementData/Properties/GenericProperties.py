@@ -1,4 +1,3 @@
-import pandas as pd
 from PySide6.QtCore import QObject
 from numpy import ndarray
 

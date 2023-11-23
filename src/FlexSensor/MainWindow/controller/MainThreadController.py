@@ -2,14 +2,15 @@ import logging
 
 from PySide6.QtCore import QThread
 
-import ConfigHandler as Config
-import Laser as Laser
-import AD2CaptDevice as AD2Dev
+import confighandler
+import LaserControl as Laser
+import CaptDeviceControl as AD2Dev
+
 import Prober as Prober
 import MeasurementEvaluationTool
 
-from MainWindow.model.MainThreadModel import MainThreadModel
-from MeasurementRoutines.MeasurementRoutine import MeasurementRoutine
+from ..model.MainThreadModel import MainThreadModel
+from FlexSensor.MeasurementRoutines.MeasurementRoutine import MeasurementRoutine
 from Prober.controller.ProberController import ProberController
 
 
@@ -52,7 +53,8 @@ class MainThreadController(object):
     def _create_working_folders(self):
         """Creates all working folders to store the measurement data.
         """
-        self.model.vaut_config.setup_folders()
+        pass
+        #self.model.config.setup_folders()
 
     def _move_measurement_routine_thread(self, measurement_routine):
         measurement_routine.moveToThread(self.measurement_thread)
@@ -77,7 +79,7 @@ class MainThreadController(object):
             self.model.laser_controller,
             self.model.ad2_controller,
             self.model.prober_controller,
-            self.model.vaut_config)
+            self.model.config)
         self.logger.debug("Initialized MeasurementRoutine.")
         return measurement_routine
 

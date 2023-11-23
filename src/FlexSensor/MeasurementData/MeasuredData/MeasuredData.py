@@ -2,6 +2,7 @@ import logging
 import os
 from pathlib import Path
 
+import LaserControl
 import numpy as np
 import pandas as pd
 import scipy
@@ -29,13 +30,13 @@ class MeasuredData:
 
         # ==============================================================================================================
         # Properties for storing information
-        self._laser_properties: LaserProperties = laser_properties  # Laser Properties
-        self._ad2_properties: AD2CaptDeviceProperties = ad2_properties  # AD2CaptDev Properties
-        self._wafer_properties: WaferProperties = wafer_properties  # Wafer Properties
-        self._waveguide_properties: WaveguideProperties = waveguide_properties  # Waveguide Properties
+        #self._laser_properties: LaserProperties = laser_properties  # Laser Properties
+        #self._ad2_properties: AD2CaptDeviceProperties = ad2_properties  # AD2CaptDev Properties
+        #self._wafer_properties: WaferProperties = wafer_properties  # Wafer Properties
+        #self._waveguide_properties: WaveguideProperties = waveguide_properties  # Waveguide Properties
         # Measurement properties like findpeaks parameter
-        self._measurement_properties: MeasurementProperties = MeasurementProperties(
-            MPropertiesFindPeaks(0.1, 10000, None))
+        #self._measurement_properties: MeasurementProperties = MeasurementProperties(
+        #    MPropertiesFindPeaks(0.1, 10000, None))
 
         # ==============================================================================================================
         # Dataframe with measured values

@@ -27,11 +27,11 @@ from MeasurementData.Properties.MeasurementProperties import (WaveguidePropertie
                                                               MeasurementProperties,
                                                               WaveguidePropertiesMZI,
                                                               MPropertiesFindPeaks)
+from MeasurementData.Properties.WaferProperties import WaferProperties
 
 import mcpy
 
-from MeasurementData.Properties.WaferProperties import WaferProperties
-from generics.logger import setup_logging
+
 
 
 class SingleMeasuredData(MeasuredData):

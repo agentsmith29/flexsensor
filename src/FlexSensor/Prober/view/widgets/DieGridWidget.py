@@ -3,8 +3,8 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPainter, QPen
 from PySide6.QtWidgets import QWidget, QGridLayout, QPushButton, QApplication, QLabel
 
-from Prober.controller.MapFileParser import MapFileParser
-from Prober.model.ProberModel import ProberModel
+from FlexSensor.Prober.controller.MapFileParser import MapFileParser
+from FlexSensor.Prober.model.ProberModel import ProberModel
 
 
 class FlatButton(QPushButton):
@@ -137,7 +137,7 @@ class DieGridWidget(QWidget):
         super(DieGridWidget, self).__init__()
         self._model = model
 
-        parsed_map = MapFileParser(str(self._model.wafer_map))
+        parsed_map = MapFileParser(model)
         self.setWindowTitle("Die Grid Widget")
         self._dies = {}
 

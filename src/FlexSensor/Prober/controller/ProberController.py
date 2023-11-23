@@ -1,21 +1,18 @@
 import logging
 
-from ConfigHandler.controller.VAutomatorConfig import VAutomatorConfig
-from Prober.controller.OpticalInterface import OpticalInterface
-import Prober
-from Prober.model.ProberModel import ProberModel
-from constants.FlexsensorConstants import Probe
-from generics.generics import pch
+import confighandler as Config
+#from ConfigHandler.controller.VAutomatorConfig import VAutomatorConfig
+import FlexSensor.Prober as Prober
+from FlexSensor.Prober.controller.OpticalInterface import OpticalInterface
+from FlexSensor.Prober.model.ProberModel import ProberModel
+from FlexSensor.constants.FlexsensorConstants import Probe
+from FlexSensor.generics.generics import pch
 
 
 class ProberController:
-    def __init__(self, model: ProberModel, vaut_config: VAutomatorConfig, *args, **kwargs):
+    def __init__(self, model: ProberModel, *args, **kwargs):
 
-        self.vaut_config = vaut_config
         self.model = model
-
-        self.model.wafer_map = self.vaut_config.wafer_config.wafermap_file
-
         self.logger = logging.getLogger("Prober")
         self.signals = Prober.Signals()
         self.msg_server = Prober.MessageServerInterface()

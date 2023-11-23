@@ -4,7 +4,6 @@ import sqlite3
 from PySide6.QtWidgets import QApplication
 
 from MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
-from generics.logger import setup_logging
 
 
 class MeasurementDatabase:

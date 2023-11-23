@@ -1,9 +1,8 @@
 from PySide6.QtGui import QIcon, QAction
 from PySide6.QtWidgets import QGroupBox, QWidget
 
-from MainWindow.controller.MainThreadController import MainThreadController
-from MainWindow.view import MainThreadView
-from pathes import image_root
+from FlexSensor.MainWindow.view import MainThreadView
+from FlexSensor.pathes import image_root
 
 
 class MenuBarDefinition(QWidget):

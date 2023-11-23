@@ -4,14 +4,14 @@ import sys
 from PySide6.QtGui import QWindow
 from PySide6.QtWidgets import QGridLayout, QApplication, QMainWindow, QWidget, QGroupBox, QVBoxLayout
 
-from ConfigHandler.controller.VAutomatorConfig import VAutomatorConfig
-from Prober.controller.MapFileParser import MapFileParser
-from Prober.controller.ProberController import ProberController
-from Prober.model.ProberModel import ProberModel
-from Prober.view.widgets.DieGridWidget import DieGridWidget
-from Prober.view.widgets.ProberPositionWidget import ProberPositionWidget
-from Prober.view.widgets.ProberStatusWidget import ProberStatusWidget
-from generics.logger import setup_logging
+import confighandler as Config
+
+#from MapFileParser import MapFileParser
+from FlexSensor.Prober.controller.ProberController import ProberController
+from FlexSensor.Prober.model.ProberModel import ProberModel
+from FlexSensor.Prober.view.widgets.DieGridWidget import DieGridWidget
+from FlexSensor.Prober.view.widgets.ProberPositionWidget import ProberPositionWidget
+from FlexSensor.Prober.view.widgets.ProberStatusWidget import ProberStatusWidget
 
 
 class ProberControlWindow(QMainWindow):

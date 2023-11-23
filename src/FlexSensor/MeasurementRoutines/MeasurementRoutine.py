@@ -1,44 +1,43 @@
 import logging
-import time
 import traceback
 from datetime import datetime
 
+import CaptDeviceControl as AD2Dev
+import LaserControl as Laser
+import mcpy
 import pandas as pd
 from PySide6.QtCore import Slot
-
-import mcpy
-from AD2CaptDevice.controller.AD2CaptDeviceController import AD2CaptDeviceController
-from ConfigHandler.controller.VAutomatorConfig import VAutomatorConfig
-from ConfigHandler.controller.VFSObject import VFSObject
-from ConfigHandler.controller.VASInputFileParser import VASInputFileParser, Structure
-from Laser.LaserControl.controller import BaseLaserController
-from MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
-from MeasurementData.Properties.MeasurementProperties import MPropertiesFindPeaks, \
-    MeasurementProperties, WaveguidePropertiesMZI
-from MeasurementRoutines.BasemeasurementRoutine import BaseMeasurementRoutine
-from Prober.controller.ProberController import ProberController
-from MeasurementData.Properties.WaferProperties import WaferProperties
 from constants.FlexsensorConstants import Probe
 from generics.generics import pch
+
+import FlexSensor.Prober as Prober
+from FlexSensor.FlexSensorConfig import FlexSensorConfig
+from FlexSensor.MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
+from FlexSensor.MeasurementData.Properties.MeasurementProperties import MPropertiesFindPeaks, \
+    MeasurementProperties, WaveguidePropertiesMZI
+from FlexSensor.MeasurementData.Properties.WaferProperties import WaferProperties
+from FlexSensor.MeasurementRoutines.BasemeasurementRoutine import BaseMeasurementRoutine
+from FlexSensor.generics.VASInputFileParser import VASInputFileParser, Structure
 
 
 class MeasurementRoutine(BaseMeasurementRoutine):
 
-    def __init__(self, laser: BaseLaserController, ad2device: AD2CaptDeviceController, prober: ProberController,
-                 vaut_config: VAutomatorConfig):
-        super().__init__(laser, ad2device, prober, vaut_config)
+    def __init__(self, laser: Laser, ad2device: AD2Dev, prober: Prober.Controller,
+                 config: FlexSensorConfig):
+        super().__init__(laser, ad2device, prober, config)
 
         self.logger = logging.getLogger("Measurement Routine")
         # The signals for connecting to the UI
 
         self.parsed_file = VASInputFileParser()
 
-        self.grouped_structures, self.bookmarks = self.parsed_file.read_file(
-            input_file=self.vaut_config.wafer_config.get_structure_file().absolute
+        selected_file, self.grouped_structures, self.bookmarks = self.parsed_file.read_file(
+            input_file=self.config.wafer_config.structure_file.get()
         )
         self.number_of_structures = self.parsed_file.num_of_structs
         self.number_of_runs = self.parsed_file.num_of_runs
 
+        self.config.wafer_config.structure_file.set(selected_file)
         # We need to connect two signals:
         # Connect the signal if a wavelength sweep starts (from the laser) to a signal that tells our oscilloscope
         # to start capturing!
@@ -57,19 +56,19 @@ class MeasurementRoutine(BaseMeasurementRoutine):
         self.probe_height = 80
 
         self.logger.info(
-            f"Init Prober Class. Number of runs per die: {self.number_of_runs}, dies {self.vaut_config.wafer_config.dies}\n"
-            f"Measurement CVS File = {self.vaut_config.wafer_config.measurement_output}\n"
-            f"Measurement Mat File = {self.vaut_config.wafer_config.measurement_mat_file}")
+            f"Init Prober Class. Number of runs per die: {self.number_of_runs}, dies {self.config.wafer_config.dies}\n"
+            f"Measurement CVS File = {self.config.wafer_config.measurement_output}\n"
+            f"Measurement Mat File = {self.config.wafer_config.measurement_mat_file}")
 
     @Slot()
     def run(self):
-        self.logger.info(f"<< Input file {self.vaut_config.wafer_config.get_structure_file().relative}")
-        self.logger.info(f">> Working directory {self.vaut_config.get_output_directory().relative}")
-        self.logger.info(f">> Log File {self.vaut_config.wafer_config.get_log_file().relative}")
-        self.logger.info(f">> Measurments CVS File {self.vaut_config.wafer_config.get_measurement_output().relative}")
-        self.logger.info(f">> Measurments Mat File {self.vaut_config.wafer_config.get_measurement_mat_file().relative}")
-        self.logger.info(f">> KLayout Bookmark file {self.vaut_config.wafer_config.get_bookmark_file().relative}")
-        self.logger.info(f">> Scope Image File {self.vaut_config.wafer_config.get_scope_image_file().relative}")
+        self.logger.info(f"<< Input file {self.config.wafer_config.get_structure_file().relative}")
+        self.logger.info(f">> Working directory {self.config.get_output_directory().relative}")
+        self.logger.info(f">> Log File {self.config.wafer_config.get_log_file().relative}")
+        self.logger.info(f">> Measurments CVS File {self.config.wafer_config.get_measurement_output().relative}")
+        self.logger.info(f">> Measurments Mat File {self.config.wafer_config.get_measurement_mat_file().relative}")
+        self.logger.info(f">> KLayout Bookmark file {self.config.wafer_config.get_bookmark_file().relative}")
+        self.logger.info(f">> Scope Image File {self.config.wafer_config.get_scope_image_file().relative}")
 
         # as long as the connection was successful, we can send some commands.
         # if it was not successful, an exception is thrown.
@@ -96,7 +95,7 @@ class MeasurementRoutine(BaseMeasurementRoutine):
             print(self.prober)
             contact, overtravel, align_dist, sep_dis, search_gap = self.prober.check_contact_height_set()
 
-            for die_idx, die_no in enumerate(self.vaut_config.wafer_config.dies):
+            for die_idx, die_no in enumerate(self.config.wafer_config.dies):
                 # Move to die
                 self.write_log("info", f"Processing die {die_no} (#{die_idx})")
                 self.die_no, self.chuck_col, self.chuck_row = self.prober.move_to_die(die_no)
@@ -185,7 +184,7 @@ class MeasurementRoutine(BaseMeasurementRoutine):
             ))
             raise e
 
-    def _step_snap_image(self, scope_file: VFSObject, fmt):
+    def _step_snap_image(self, scope_file, fmt):
         # Here we adapt filename of the scope by passing the correct keywords
         try:
             self.write_log("info", f"{fmt} Saving scope image to {scope_file.relative}")
@@ -322,7 +321,7 @@ class MeasurementRoutine(BaseMeasurementRoutine):
         # Create the correct file for the scope image
         # self.vaut_config.wafer_config.get_scope_image_file().set_obj(
         #    keywords={"{die}": self.die_no, "{structure}": self.structure.name, "{it}": 1})
-        self._step_snap_image(self.vaut_config.wafer_config.get_scope_image_file(
+        self._step_snap_image(self.config.wafer_config.get_scope_image_file(
             keywords={"{die}": self.die_no, "{structure}": self.structure.name}), self.formatter)
 
         # Search for the light
@@ -338,7 +337,7 @@ class MeasurementRoutine(BaseMeasurementRoutine):
             # For displaying the data in the GUI
             measure_time, captured_values = self._step_capture_transmission(rep, self.formatter)
             data = [[
-                self.vaut_config.wafer_nr, self.die_no, self.chuck_col,
+                self.config.wafer_nr, self.die_no, self.chuck_col,
                 self.chuck_row, timestamp, str(self.structure), rep,
                 self.structure.x_in, self.structure.y_in,
                 self.structure.x_out, self.structure.y_out,
@@ -347,20 +346,20 @@ class MeasurementRoutine(BaseMeasurementRoutine):
             self.siph_data = pd.concat([self.siph_data, pd.DataFrame(data, columns=self.columns)])
 
             try:
-                self.siph_data.to_csv(str(self.vaut_config.wafer_config.get_measurement_output()))
+                self.siph_data.to_csv(str(self.config.wafer_config.get_measurement_output()))
                 self.siph_data.to_excel(
-                    str(self.vaut_config.wafer_config.get_measurement_output()).replace('csv', 'xlsx'))
+                    str(self.config.wafer_config.get_measurement_output()).replace('csv', 'xlsx'))
             except Exception as e:
                 self._write_error("Write SiPh", f"Could not write sphi data to file "
-                                                f"{self.vaut_config.wafer_config.get_measurement_output()}", e,
+                                                f"{self.config.wafer_config.get_measurement_output()}", e,
                                   traceback)
                 self.signals.error.emit((type(e),
                                          f"Could not write sphi data to file "
-                                         f"{self.vaut_config.wafer_config.get_measurement_output()}: {e}",
+                                         f"{self.config.wafer_config.get_measurement_output()}: {e}",
                                          traceback.format_exc()))
 
             wafer_properties = WaferProperties(
-                wafer_number=self.vaut_config.wafer_nr,
+                wafer_number=self.config.wafer_nr,
                 structure_name=self.structure.name,
                 die_nr=self.die_no,
                 chuck_col=self.chuck_col,
@@ -375,7 +374,7 @@ class MeasurementRoutine(BaseMeasurementRoutine):
                 wafer_properties)
 
             cur_measured_signal._save_mat_file(
-                filename=self.vaut_config.wafer_config.get_measurement_mat_file(keywords={"{die}": self.die_no,
+                filename=self.config.wafer_config.get_measurement_mat_file(keywords={"{die}": self.die_no,
                                                                                           "{structure}": self.structure.name,
                                                                                           "{it}": f"rep_{rep + 1}"}).absolute
             )

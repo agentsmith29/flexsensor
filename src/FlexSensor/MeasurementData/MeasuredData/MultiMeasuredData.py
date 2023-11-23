@@ -11,9 +11,6 @@ from MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
 import mcpy
 from MeasurementData.MeasuredData.SupportClasses.MatplotlibPlottingHelpers import MPLPlottingHelper
 from MeasurementData.MeasuredData.SupportClasses.MeasurementDataLoader import MeasurementDataLoader
-from generics.logger import setup_logging
-from wrappers.QProgressBarWindow import QProgressBarWindow
-
 
 class MultiMeasuredData(MeasuredData):
 

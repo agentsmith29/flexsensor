@@ -4,11 +4,10 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QIcon
 
-import Prober as Prober
+import FlexSensor.Prober as Prober
 
-import ConfigHandler.controller.VASInputFileParser as input_file_parser
-from Prober.controller.ProberController import ProberController
-from constants.FlexsensorConstants import Probe
+from FlexSensor.Prober.controller.ProberController import ProberController
+from FlexSensor.constants.FlexsensorConstants import Probe
 
 
 class StepThroughView(QMainWindow):

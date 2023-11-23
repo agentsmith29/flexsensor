@@ -11,10 +11,7 @@ from PySide6.QtWidgets import QProgressDialog, QWidget
 
 import MeasurementEvaluationTool as met
 from MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
-
-from wrappers.QProgressBarWindow import QProgressBarWindow
-
-
+from fswidgets import QProgressBarWindow
 class MeasurementDataLoader(QWidget):
 
     @staticmethod

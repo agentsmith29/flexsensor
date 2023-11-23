@@ -1,8 +1,8 @@
 import numpy as np
 from PySide6.QtCore import Signal
 
-import mcpy
-from mcpy import Uncertainty
+#import mcpy
+#from mcpy import Uncertainty
 
 from generics.GenericProperties import GenericProperties
 

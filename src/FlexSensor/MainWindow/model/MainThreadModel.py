@@ -1,56 +1,51 @@
 from PySide6.QtCore import QObject, Signal
 
-import Laser as Laser
-import AD2CaptDevice as AD2Dev
-import Prober as Prober
+import LaserControl as Laser
+import CaptDeviceControl as AD2Dev
+import FlexSensor.Prober as Prober
+import confighandler as Config
+
 import MeasurementEvaluationTool as met
-import ConfigHandler as Config
+#import ConfigHandler as Config
 from MeasurementRoutines.MeasurementRoutine import MeasurementRoutine
+from FlexSensor.FlexSensorConfig import FlexSensorConfig
 
 
 class MainThreadSignals(QObject):
     # Signals for the main thread
-    vaut_config_changed = Signal(Config.VAutomatorConfig)
-    laser_changed = Signal(Laser.Model, Laser.Controller, Laser.ControlWindow)
-    ad2_changed = Signal(AD2Dev.Model, AD2Dev.Controller, AD2Dev.ControlWindow)
+    vaut_config_changed = Signal(Config.ConfigNode)
+    laser_changed = Signal(Laser.Model, Laser.Controller, Laser.View)
+    ad2_changed = Signal(AD2Dev.Model, AD2Dev.Controller, AD2Dev.View)
     prober_changed = Signal(Prober.Model, Prober.Controller, Prober.ControlWindow)
 
     measurement_routine_changed = Signal(MeasurementRoutine)
 
 class MainThreadModel(QObject):
 
-    def __init__(self, vaut_config: Config.VAutomatorConfig):
+    def __init__(self, config: FlexSensorConfig):
         super().__init__()
 
         self.signals = MainThreadSignals()
 
-        self._vaut_config: Config.VAutomatorConfig = vaut_config
+        self._config: FlexSensorConfig = config
 
         self._measurement_routine: MeasurementRoutine = None
 
 
 
-        self._ad2_model: AD2Dev.Model = AD2Dev.Model(self.vaut_config.ad2_device_config)
-        self._ad2_controller: AD2Dev.Controller = AD2Dev.Controller(
-            self._ad2_model)
-        self._ad2_window: AD2Dev.ControlWindow = AD2Dev.ControlWindow(
-            self._ad2_model, self._ad2_controller)
+        self._ad2_model: AD2Dev.Model = AD2Dev.Model(self.config.captdev_config)
+        self._ad2_controller: AD2Dev.Controller = AD2Dev.Controller(self._ad2_model)
+        self._ad2_window: AD2Dev.View = AD2Dev.View(self._ad2_model, self._ad2_controller)
 
         # Devices
-        self._laser_model: Laser.Model = Laser.Model(self.vaut_config.laser_config)
-        self._laser_controller: Laser.Controller = Laser.Controller(self._laser_model, self._ad2_controller)
+        self._laser_model: Laser.Model = Laser.Model(self.config.laser_config)
+        self._laser_controller: Laser.Controller = Laser.Controller(self._laser_model)
 
-        self._laser_window: Laser.ControlWindow = Laser.ControlWindow(
-            self._laser_model,
-            self._laser_controller)
+        self._laser_window: Laser.View = Laser.View(self._laser_model, self._laser_controller)
 
-        self._prober_model: Prober.Model = Prober.Model()
-        self._prober_controller: Prober.Controller = Prober.Controller(
-            self._prober_model,
-            self.vaut_config)
-        self._prober_window: Prober.ControlWindow = Prober.ControlWindow(
-            self._prober_model,
-            self._prober_controller)
+        self._prober_model: Prober.Model = Prober.Model(self.config)
+        self._prober_controller: Prober.Controller = Prober.Controller(self._prober_model)
+        self._prober_window: Prober.ControlWindow = Prober.ControlWindow(self._prober_model, self._prober_controller)
 
         # Widgets
         self.mea_eval_tool_model: met.Model  = met.Model()
@@ -62,13 +57,13 @@ class MainThreadModel(QObject):
 
     # Implement all getter and setter methods for the model here
     @property
-    def vaut_config(self) -> Config.VAutomatorConfig:
-        return self._vaut_config
+    def config(self) -> FlexSensorConfig:
+        return self._config
 
-    @vaut_config.setter
-    def vaut_config(self, value: Config.VAutomatorConfig):
-        self._vaut_config = value
-        self.signals.vaut_config_changed.emit(self.vaut_config)
+    @config.setter
+    def config(self, value: FlexSensorConfig):
+        self._config = value
+        self.signals.vaut_config_changed.emit(self.config)
 
     @property
     def laser_model(self) -> Laser.Model:
@@ -90,11 +85,11 @@ class MainThreadModel(QObject):
         self.signals.laser_changed.emit(self.laser_model, self.laser_controller, self.laser_window)
 
     @property
-    def laser_window(self) -> Laser.ControlWindow:
+    def laser_window(self) -> Laser.View:
         return self._laser_window
 
     @laser_window.setter
-    def laser_window(self, value: Laser.ControlWindow):
+    def laser_window(self, value: Laser.View):
         self._laser_window = value
         self.signals.laser_changed.emit(self.laser_model, self.laser_controller, self.laser_window)
 
@@ -118,11 +113,11 @@ class MainThreadModel(QObject):
         self.signals.ad2_changed.emit(self.ad2_model, self.ad2_controller, self.ad2_window)
 
     @property
-    def ad2_window(self) -> AD2Dev.ControlWindow:
+    def ad2_window(self) -> AD2Dev.View:
         return self._ad2_window
 
     @ad2_window.setter
-    def ad2_window(self, value: AD2Dev.ControlWindow):
+    def ad2_window(self, value: AD2Dev.View):
         self._ad2_window = value
         self.signals.ad2_changed.emit(self.ad2_model, self.ad2_controller, self.ad2_window)
 

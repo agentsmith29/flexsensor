@@ -8,7 +8,6 @@ from InitialSetupWizard.pages.ForthPage import ForthWizardPage
 from InitialSetupWizard.pages.ThirdPage import ThirdWizardPage
 from InitialSetupWizard.pages.SecondPage import SecondWizardPage
 from InitialSetupWizard.pages.FirstPage import FirstWizardPage
-from generics.logger import setup_logging
 
 
 class InitialSetupWizard(QWizard):
@@ -28,7 +27,6 @@ class InitialSetupWizard(QWizard):
 
 
 if __name__ == "__main__":
-    setup_logging()
 
     app = QApplication()
     prober = Prober.Controller()

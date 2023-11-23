@@ -4,6 +4,8 @@ from PySide6.QtCore import QObject, Signal
 
 from MeasurementData.Properties.WaferProperties import WaferProperties
 
+from FlexSensor.FlexSensorConfig import FlexSensorConfig
+
 
 class ProberSignals(QObject):
     '''
@@ -39,8 +41,10 @@ class ProberSignals(QObject):
 
 class ProberModel:
 
-    def __init__(self):
+    def __init__(self, config: FlexSensorConfig):
         self.signals = ProberSignals()
+
+        self.config = config
 
         self._connected: bool = False
         self._version: str = "Unknown Version"
@@ -56,7 +60,7 @@ class ProberModel:
         self._errors: list = []
         self._warnings: list = []
 
-        self._wafer_map = None
+        #self._wafer_map = self.config.
 
     @property
     def laser_properties(self) -> WaferProperties:
@@ -84,11 +88,11 @@ class ProberModel:
 
     @property
     def wafer_map(self) -> Path:
-        return self._wafer_map
+        return self.config.wafer_config.wafermap_file.get()
 
     @wafer_map.setter
     def wafer_map(self, value: Path):
-        self._wafer_map = value
+        self.config.wafer_config.wafermap_file.set(value)
         self.signals.wafer_map_changed.emit(value)
 
     @property

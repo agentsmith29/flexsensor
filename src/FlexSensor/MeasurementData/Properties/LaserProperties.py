@@ -1,9 +1,9 @@
 import sys
 
 from MeasurementData.Properties.GenericProperties import GenericProperties
-import mcpy
+#import mcpy
 
-sys.path.append('../mcpy/mcpy')
+#sys.path.append('../mcpy/mcpy')
 import mcpy
 
 

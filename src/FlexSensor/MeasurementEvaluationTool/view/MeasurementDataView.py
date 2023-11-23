@@ -12,8 +12,6 @@ from generics.PandasTableModel import PandasTableModel
 from MeasurementEvaluationTool.view.ParameterAdjustmentView import ParameterAdjustmentWindow
 from MeasurementEvaluationTool.view.widgets.MeasurementSelectionWidget import MeasurementSelectionWidget
 from MeasurementEvaluationTool.view.widgets.PlotViewWidget import PlotViewWidget
-from generics.logger import setup_logging
-
 
 class MeasurementDataView(QWidget):
     def __init__(self, model: MeasurementDataModel, controller: MeasurementDataController):
@@ -154,7 +152,7 @@ def convert_mat(mypath):
 
 if __name__ == "__main__":
     app = QApplication()
-    setup_logging()
+
 
     #mypath = (r'F:\measurements_06032022\measurements_06032022\mea_mzi1_2022_03_06\T40741W177G0')
     #mypath = (r'F:\measurements_06032022')

@@ -1,24 +1,30 @@
 import logging
 
+#from LaserControlOld.controller.BaseLaserController import BaseLaserController
 from PySide6.QtCore import QObject, QThread, Slot
 
-from AD2CaptDevice.controller.AD2CaptDeviceController import AD2CaptDeviceController
-from ConfigHandler.controller.VAutomatorConfig import VAutomatorConfig
-from Laser.LaserControl.controller import BaseLaserController
-from Prober.controller.ProberController import ProberController
-from MeasurementRoutines.WorkerSignals import WorkerSignals
+#from AD2CaptDevice.controller.AD2CaptDeviceController import AD2CaptDeviceController
+#from ConfigHandler.controller.VAutomatorConfig import VAutomatorConfig
+#from Laser.LaserControl.controller import BaseLaserController
+
+import CaptDeviceControl as CaptDevice
+import LaserControl as Laser
+import confighandler as Config
+
+from FlexSensor.FlexSensorConfig import FlexSensorConfig
+from FlexSensor.Prober.controller.ProberController import ProberController
+from FlexSensor.MeasurementRoutines.WorkerSignals import WorkerSignals
 
 
 class BaseMeasurementRoutine(QObject):
 
-    def __init__(self, laser: BaseLaserController, ad2device: AD2CaptDeviceController, prober: ProberController,
-                 vaut_config: VAutomatorConfig):
+    def __init__(self, laser: Laser, ad2device: CaptDevice, prober: ProberController, config: FlexSensorConfig):
         super().__init__()
         self.logger = logging.getLogger("Base Measurement Routine")
-        self.vaut_config = vaut_config
+        self.config = config
 
-        self.ad2device: AD2CaptDeviceController = ad2device
-        self.laser: BaseLaserController = laser
+        self.ad2device: CaptDevice = ad2device
+        self.laser: Laser = laser
         self.prober: ProberController = prober
         self.logger.debug(f"{self.prober.report_kernel_version()}")
         print(self.prober)

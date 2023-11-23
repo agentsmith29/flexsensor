@@ -11,42 +11,38 @@ from PySide6.QtGui import QIcon, QAction
 import pyqtgraph as pg
 from pyqtgraph.dockarea import *
 
-import __version__
-from ConfigHandler.controller.VASInputFileParser import VASInputFileParser
-from MainWindow.view.BaseWindow import BaseWindow
-from MainWindow.view.widgets.HomeStatusWidget import HomeStatusWidget
-from MainWindow.view.widgets.ScopeWidget import ScopeWidget
+import FlexSensor.__version__ as fsversion
+import confighandler as Config
+from FlexSensor.MainWindow.view.BaseWindow import BaseWindow
+from FlexSensor.MainWindow.view.widgets.HomeStatusWidget import HomeStatusWidget
+from FlexSensor.MainWindow.view.widgets.MenuBarDefinition import MenuBarDefinition
+from FlexSensor.MainWindow.view.widgets.ScopeWidget import ScopeWidget
 
-from MainWindow.view.MainView import Ui_MainWindow
+from FlexSensor.MainWindow.view.MainView import Ui_MainWindow
 
-from MainWindow.controller.MainThreadController import MainThreadController
-from MainWindow.model.MainThreadModel import MainThreadModel
-from MainWindow.view.StepThroughView import StepThroughView
-from InitialSetupWizard.InitialSetupWizard import InitialSetupWizard
-from MainWindow.view.widgets.WidgetSettingsFilesFolders import (WidgetSettingsOutFilesFolders,
+from FlexSensor.MainWindow.controller.MainThreadController import MainThreadController
+from FlexSensor.MainWindow.model.MainThreadModel import MainThreadModel
+from FlexSensor.MainWindow.view.StepThroughView import StepThroughView
+from FlexSensor.InitialSetupWizard.InitialSetupWizard import InitialSetupWizard
+from FlexSensor.MainWindow.view.widgets.WidgetSettingsFilesFolders import (WidgetSettingsOutFilesFolders,
                                                                 WidgetLaserSettings, WidgetSettingsInFilesFolders,
                                                                 WidgetAD2Settings)
-from MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
-from MeasurementEvaluationTool.view.widgets.MenuBarDefinition import MenuBarDefinition
-from constants.qs_style_sheets import CSSPlayPushButton
-
-#
-from pathes import image_root
-import ConfigHandler as Config
+from FlexSensor.MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
+from FlexSensor.constants.qs_style_sheets import CSSPlayPushButton
+from FlexSensor.generics.VASInputFileParser import VASInputFileParser
 
 
 class MainWindow(BaseWindow):
 
     def __init__(self, model: MainThreadModel, controller: MainThreadController):
-        super().__init__(Ui_MainWindow())
+        super().__init__(Ui_MainWindow(), model.config)
         self.logger = logging.getLogger("MainThread (UI)")
 
         self._model: MainThreadModel = model
         self._controller: MainThreadController = controller
 
         # Signals for finished acquisition
-        self.model.measurement_routine.signals.routine_iteration_finished.connect(
-            self.on_routine_iteration_finished)
+        self.model.measurement_routine.signals.routine_iteration_finished.connect(self.on_routine_iteration_finished)
 
         self._ui.settingsTopBtn.clicked.connect(self.openCloseRightBox)
         self._ui.toggleButton.clicked.connect(lambda: self.toggleMenu(True))
@@ -96,7 +92,7 @@ class MainWindow(BaseWindow):
         self._ui.btn_measured_data.clicked.connect(self._on_btn_measurement_evaluation_clicked)
 
 
-        self._ui.home_layout.addWidget(HomeStatusWidget(self), 0, 0, 1, 2)
+        self._ui.home_layout.addWidget(HomeStatusWidget(self.model), 0, 0, 1, 2)
         self._ui.home_layout.addWidget(self.init_UI_measurement_settings(), 1, 0)
         self._ui.home_layout.addWidget(ScopeWidget(self), 1, 1)
         # self._ui.grid_layout_main.addWidget(self.init_UI_device_control(), 1, 1, 2, 1)
@@ -105,7 +101,7 @@ class MainWindow(BaseWindow):
         self._ui.btn_home.clicked.connect(self._on_btn_home_clicked)
 
         # self.setGeometry(100, 100, 1250, 150)
-        self.setWindowTitle(f'FlexSensor Automator {__version__.__version__}')
+        self.setWindowTitle(f'FlexSensor Automator {fsversion}')
         self.setWindowIcon(QIcon('../images/FlexSensorIcon.png'))
 
         # self.init_menu_run()
@@ -125,21 +121,20 @@ class MainWindow(BaseWindow):
 
     def init_UI_status_bar(self):
         # global status_bar
-
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
 
     def init_UI_measurement_settings(self):
         tabwidget = QTabWidget()
-        self.configView = Config.View(self.model.vaut_config)
-        tab_input = tabwidget.addTab(WidgetSettingsInFilesFolders(self.model.vaut_config), "Input")
-        tab_folders = tabwidget.addTab(WidgetSettingsOutFilesFolders(self.model.vaut_config), "Folder Settings")
-        tab_ad2 = tabwidget.addTab(WidgetAD2Settings(self.model.vaut_config), "AD2 Settings")
-        tab_laser = tabwidget.addTab(WidgetLaserSettings(self.model.vaut_config), "Laser Settings")
-        tab_yaml = tabwidget.addTab(self.configView, "YAML Config")
-        tabwidget.currentChanged.connect(
-            lambda idx: self.configView.repopulate(self.model.vaut_config) if idx == tab_yaml else print("fg")
-        )
+        self.configView = self.model.config.view
+        tab_input = tabwidget.addTab(WidgetSettingsInFilesFolders(self.model.config), "Input")
+        tab_folders = tabwidget.addTab(WidgetSettingsOutFilesFolders(self.model.config), "Folder Settings")
+        tab_ad2 = tabwidget.addTab(WidgetAD2Settings(self.model.config), "AD2 Settings")
+        tab_laser = tabwidget.addTab(WidgetLaserSettings(self.model.config.laser_config), "Laser Settings")
+        #tab_yaml = tabwidget.addTab(self.configView, "YAML Config")
+        #tabwidget.currentChanged.connect(
+        #    lambda idx: self.configView.repopulate(self.model.config) if idx == tab_yaml else print("fg")
+        #)
         return tabwidget
 
     # def init_UI_device_control(self):
@@ -234,9 +229,9 @@ class MainWindow(BaseWindow):
     def _on_open_step_through(self):
         file_parser = VASInputFileParser()
         grouped_structures, _ = file_parser.read_file(
-            input_file=self.model.vaut_config.wafer_config.get_structure_file().absolute
+            input_file=self.model.config.wafer_config.get_structure_file().absolute
         )
-        self.step_through_view = StepThroughView(grouped_structures)
+        self.step_through_view = StepThroughView(grouped_structures, self.model.prober_controller)
         self.step_through_view.show()
 
     def _on_open_initial_setup_wizard(self):
@@ -340,13 +335,13 @@ class MainWindow(BaseWindow):
         self.status_bar.showMessage(message)
 
     def on_report_info_emitted(self, version_info):
-        self.lbl_die_no.setText("<b>" + str(version_info["die_no"]) + "</b>")
-        self.lbl_structure.setText("<b>" + str(version_info["structure"]) + "</b>")
-        self.lbl_die_col.setText("<b>" + str(version_info["chuck_col"]) + "</b>")
-        self.lbl_die_row.setText("<b>" + str(version_info["chuck_row"]) + "</b>")
+        self._ui.lbl_die_no.setText("<b>" + str(version_info["die_no"]) + "</b>")
+        self._ui.lbl_structure.setText("<b>" + str(version_info["structure"]) + "</b>")
+        self._ui.lbl_die_col.setText("<b>" + str(version_info["chuck_col"]) + "</b>")
+        self._ui.lbl_die_row.setText("<b>" + str(version_info["chuck_row"]) + "</b>")
 
     def on_report_progress(self, progress):
-        self.progress.setValue(progress)
+        self._ui.progress.setValue(progress)
 
     def on_structure_select(self):
         pass

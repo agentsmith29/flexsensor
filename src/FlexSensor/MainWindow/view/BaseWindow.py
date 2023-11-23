@@ -3,21 +3,24 @@ from PySide6.QtGui import QColor, Qt, QIcon
 from PySide6.QtWidgets import QMainWindow, QGraphicsDropShadowEffect, QSizeGrip, QPushButton
 
 import __version__
-from ConfigHandler.controller.AppSettings import Settings
+
 from MainWindow.view.MainView import Ui_MainWindow
 from MainWindow.view.widgets.custom_grips import CustomGrip
+
+from FlexSensor.FlexSensorConfig import FlexSensorConfig
 
 
 class BaseWindow(QMainWindow):
 
-    def __init__(self, ui_main_window: Ui_MainWindow):
+    def __init__(self, ui_main_window: Ui_MainWindow, config: FlexSensorConfig):
         super().__init__()
         self.GLOBAL_STATE = False
         self.GLOBAL_TITLE_BAR = True
 
         self._ui = ui_main_window
         self._ui.setupUi(self)
-        Settings.ENABLE_CUSTOM_TITLE_BAR = True
+        self.app_config = config.app_config
+        self.app_config.ENABLE_CUSTOM_TITLE_BAR.set(True)
 
         # APP NAME
         # ///////////////////////////////////////////////////////////////
@@ -27,7 +30,7 @@ class BaseWindow(QMainWindow):
         self.setWindowTitle(title)
         self._ui.titleRight.setText(description)
 
-        if not Settings.ENABLE_CUSTOM_TITLE_BAR:
+        if not self.app_config.ENABLE_CUSTOM_TITLE_BAR.get():
             self._ui.appMargins.setContentsMargins(0, 0, 0, 0)
             self._ui.minimizeAppBtn.hide()
             self._ui.maximizeRestoreAppBtn.hide()
@@ -79,8 +82,8 @@ class BaseWindow(QMainWindow):
             # GET WIDTH
             width = self._ui.extraLeftBox.width()
             widthRightBox = self._ui.extraRightBox.width()
-            maxExtend = Settings.LEFT_BOX_WIDTH
-            color = Settings.BTN_LEFT_BOX_COLOR
+            maxExtend = self.app_config.LEFT_BOX_WIDTH.get()
+            color = self.app_config.BTN_LEFT_BOX_COLOR.get()
             standard = 0
 
             # GET BTN STYLE
@@ -109,8 +112,8 @@ class BaseWindow(QMainWindow):
             # GET WIDTH
             width = self._ui.extraRightBox.width()
             widthLeftBox = self._ui.extraLeftBox.width()
-            maxExtend = Settings.RIGHT_BOX_WIDTH
-            color = Settings.BTN_RIGHT_BOX_COLOR
+            maxExtend = self.app_config.RIGHT_BOX_WIDTH.get()
+            color = self.app_config.BTN_RIGHT_BOX_COLOR.get()
             standard = 0
 
             # GET BTN STYLE
@@ -137,7 +140,7 @@ class BaseWindow(QMainWindow):
         if enable:
             # GET WIDTH
             width = self._ui.leftMenuBg.width()
-            maxExtend = Settings.MENU_WIDTH
+            maxExtend = self.app_config.MENU_WIDTH.get()
             standard = 60
 
             # SET MAX WIDTH
@@ -178,7 +181,7 @@ class BaseWindow(QMainWindow):
 
         # ANIMATION RIGHT BOX
         self.right_box = QPropertyAnimation(self._ui.extraRightBox, b"minimumWidth")
-        self.right_box.setDuration(Settings.TIME_ANIMATION)
+        self.right_box.setDuration(self.app_config.TIME_ANIMATION)
         self.right_box.setStartValue(right_box_width)
         self.right_box.setEndValue(right_width)
         self.right_box.setEasingCurve(QEasingCurve.InOutQuart)
@@ -190,11 +193,11 @@ class BaseWindow(QMainWindow):
         self.group.start()
 
     def selectMenu(self, getStyle):
-        select = getStyle + Settings.MENU_SELECTED_STYLESHEET
+        select = getStyle + self.app_config.MENU_SELECTED_STYLESHEET.get()
         return select
 
     def deselectMenu(self, getStyle):
-        deselect = getStyle.replace(Settings.MENU_SELECTED_STYLESHEET, "")
+        deselect = getStyle.replace(self.app_config.MENU_SELECTED_STYLESHEET.get(), "")
         return deselect
 
     # START SELECTION
@@ -210,7 +213,7 @@ class BaseWindow(QMainWindow):
                 w.setStyleSheet(self.deselectMenu(w.styleSheet()))
 
     def resize_grips(self):
-        if Settings.ENABLE_CUSTOM_TITLE_BAR:
+        if self.app_config.ENABLE_CUSTOM_TITLE_BAR:
             self.left_grip.setGeometry(0, 10, 10, self.height())
             self.right_grip.setGeometry(self.width() - 10, 10, 10, self.height())
             self.top_grip.setGeometry(0, 0, self.width(), 10)
