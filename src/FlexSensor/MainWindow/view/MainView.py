@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'MainViewWUffIj.ui'
+## Form generated from reading UI file 'MainView.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.3
+## Created by: Qt User Interface Compiler version 6.6.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -28,6 +28,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(1085, 753)
         MainWindow.setMinimumSize(QSize(940, 560))
         MainWindow.setToolTipDuration(-9)
+        MainWindow.setStyleSheet(u"")
         self.styleSheet = QWidget(MainWindow)
         self.styleSheet.setObjectName(u"styleSheet")
         self.styleSheet.setMaximumSize(QSize(16777214, 16777215))
@@ -75,7 +76,7 @@ class Ui_MainWindow(object):
 "}\n"
 "#topLogo {\n"
 "	background-color: rgb(33, 37, 43);\n"
-"	border-image: url(:/images/images/images/FlexSensorIcon.png) 10 0 0 0 strech strech;\n"
+"	border-image: url(:/images/FlexSensorIcon_256.png) 10 0 0 0 strech strech;\n"
 "	background-position: centered;\n"
 "	background-repeat: no-repeat;\n"
 "}\n"
@@ -98,9 +99,9 @@ class Ui_MainWindow(object):
 "#topMenu .QPushButton:hover {\n"
 "	background-color: rgb(40, 44, 52);\n"
 "}\n"
-"#topMenu .QPushButton:p"
-                        "ressed {	\n"
-"	background-color: rgb(189, 147, 249);\n"
+"#topMenu .QPushButton:pressed {	\n"
+""
+                        "	background-color: rgb(189, 147, 249);\n"
 "	color: rgb(255, 255, 255);\n"
 "}\n"
 "#bottomMenu .QPushButton {	\n"
@@ -137,9 +138,9 @@ class Ui_MainWindow(object):
 "#toggleButton:hover {\n"
 "	background-color: rgb(40, 44, 52);\n"
 "}\n"
-"#toggleButto"
-                        "n:pressed {\n"
-"	background-color: rgb(189, 147, 249);\n"
+"#toggleButton:pressed {\n"
+""
+                        "	background-color: rgb(189, 147, 249);\n"
 "}\n"
 "\n"
 "/* Title Menu */\n"
@@ -159,7 +160,7 @@ class Ui_MainWindow(object):
 "#extraIcon {\n"
 "	background-position: center;\n"
 "	background-repeat: no-repeat;\n"
-"	background-image: url(:/icons/images/icons/icon_settings.png);\n"
+"	background-image: url(:/icons/icons/icon_settings.png);\n"
 "}\n"
 "\n"
 "/* Label */\n"
@@ -170,9 +171,9 @@ class Ui_MainWindow(object):
 "#extraCloseColumnBtn:hover { background-color: rgb(196, 161, 249); border-style: solid; border-radius: 4px; }\n"
 "#extraCloseColumnBtn:pressed { background-color: rgb(180, 141, 238); border-style: solid; border-radius: 4px; }\n"
 "\n"
-"/* Extr"
-                        "a Content */\n"
-"#extraContent{\n"
+"/* Extra Content */\n"
+"#extra"
+                        "Content{\n"
 "	border-top: 3px solid rgb(40, 44, 52);\n"
 "}\n"
 "\n"
@@ -207,8 +208,8 @@ class Ui_MainWindow(object):
 "\n"
 "/* Top Buttons */\n"
 "#rightButtons .QPushButton { background-color: rgba(255, 255, 255, 0); border: none;  border-radius: 5px; }\n"
-"#rightButtons .QPushBu"
-                        "tton:hover { background-color: rgb(44, 49, 57); border-style: solid; border-radius: 4px; }\n"
+"#rightButtons .QPushButton:hover { background"
+                        "-color: rgb(44, 49, 57); border-style: solid; border-radius: 4px; }\n"
 "#rightButtons .QPushButton:pressed { background-color: rgb(23, 26, 30); border-style: solid; border-radius: 4px; }\n"
 "\n"
 "/* Theme Settings */\n"
@@ -234,8 +235,8 @@ class Ui_MainWindow(object):
 "	background-color: rgb(40, 44, 52);\n"
 "}\n"
 "#contentSettings .QPushButton:pressed {	\n"
-""
-                        "	background-color: rgb(189, 147, 249);\n"
+"	background-color: "
+                        "rgb(189, 147, 249);\n"
 "	color: rgb(255, 255, 255);\n"
 "}\n"
 "\n"
@@ -270,8 +271,8 @@ class Ui_MainWindow(object):
 "}\n"
 "QHeaderView::section:horizontal\n"
 "{\n"
-"   "
-                        " border: 1px solid rgb(33, 37, 43);\n"
+"    border: 1px solid "
+                        "rgb(33, 37, 43);\n"
 "	background-color: rgb(33, 37, 43);\n"
 "	padding: 3px;\n"
 "	border-top-left-radius: 7px;\n"
@@ -305,8 +306,8 @@ class Ui_MainWindow(object):
 "	background-color: rgb(27, 29, 35);\n"
 "	border-radius: 5px;\n"
 "	padding: 10px;\n"
-"	selection-"
-                        "color: rgb(255, 255, 255);\n"
+"	selection-color: rgb(255, 255"
+                        ", 255);\n"
 "	selection-background-color: rgb(255, 121, 198);\n"
 "}\n"
 "QPlainTextEdit  QScrollBar:vertical {\n"
@@ -342,9 +343,9 @@ class Ui_MainWindow(object):
 "    width: 20px;\n"
 "	border-top-right-radius: 4px;\n"
 "    border-bottom-right-radius: 4px;\n"
-"    subcontrol-positi"
-                        "on: right;\n"
-"    subcontrol-origin: margin;\n"
+"    subcontrol-position: right;\n"
+"    "
+                        "subcontrol-origin: margin;\n"
 "}\n"
 "QScrollBar::sub-line:horizontal {\n"
 "    border: none;\n"
@@ -380,9 +381,9 @@ class Ui_MainWindow(object):
 "    background: rgb(55, 63, 77);\n"
 "     height: 20px;\n"
 "	border-bottom-left-radius: 4px;\n"
-"    border-bottom-right-radius"
-                        ": 4px;\n"
-"     subcontrol-position: bottom;\n"
+"    border-bottom-right-radius: 4px;\n"
+"     sub"
+                        "control-position: bottom;\n"
 "     subcontrol-origin: margin;\n"
 " }\n"
 " QScrollBar::sub-line:vertical {\n"
@@ -415,10 +416,10 @@ class Ui_MainWindow(object):
 "    border: 3px solid rgb(58, 66, 81);\n"
 "}\n"
 "QCheckBox::indicator:checked {\n"
-"    background: 3px solid rgb(52, 59,"
-                        " 72);\n"
-"	border: 3px solid rgb(52, 59, 72);	\n"
-"	background-image: url(:/icons/images/icons/cil-check-alt.png);\n"
+"    background: 3px solid rgb(52, 59, 72);\n"
+"	border: "
+                        "3px solid rgb(52, 59, 72);	\n"
+"	background-image: url(:/icons/icons/cil-check-alt.png);\n"
 "}\n"
 "\n"
 "/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
@@ -450,9 +451,9 @@ class Ui_MainWindow(object):
 "QComboBox:hover{\n"
 "	border: 2px solid rgb(64, 71, 88);\n"
 "}\n"
-"QComboBox:"
-                        ":drop-down {\n"
-"	subcontrol-origin: padding;\n"
+"QComboBox::drop-down {\n"
+"	subcontr"
+                        "ol-origin: padding;\n"
 "	subcontrol-position: top right;\n"
 "	width: 25px; \n"
 "	border-left-width: 3px;\n"
@@ -460,7 +461,7 @@ class Ui_MainWindow(object):
 "	border-left-style: solid;\n"
 "	border-top-right-radius: 3px;\n"
 "	border-bottom-right-radius: 3px;	\n"
-"	background-image: url(:/icons/images/icons/cil-arrow-bottom.png);\n"
+"	background-image: url(:/icons/icons/cil-arrow-bottom.png);\n"
 "	background-position: center;\n"
 "	background-repeat: no-reperat;\n"
 " }\n"
@@ -483,9 +484,9 @@ class Ui_MainWindow(object):
 "	background-color: rgb(55, 62, 76);\n"
 "}\n"
 "QSlider::handle:horizontal {\n"
-"    background-co"
-                        "lor: rgb(189, 147, 249);\n"
-"    border: none;\n"
+"    background-color: rgb(189, 147, 249);\n"
+"    "
+                        "border: none;\n"
 "    height: 10px;\n"
 "    width: 10px;\n"
 "    margin: 0px;\n"
@@ -522,9 +523,9 @@ class Ui_MainWindow(object):
 "    background-color: rgb(255, 121, 198);\n"
 "}\n"
 "\n"
-"/* /////////////////////////////////////////////////////////////////////////////////"
-                        "////////////////\n"
-"CommandLinkButton */\n"
+"/* /////////////////////////////////////////////////////////////////////////////////////////////////\n"
+"CommandLinkB"
+                        "utton */\n"
 "QCommandLinkButton {	\n"
 "	color: rgb(255, 121, 198);\n"
 "	border-radius: 5px;\n"
@@ -568,9 +569,9 @@ class Ui_MainWindow(object):
 "\n"
 "\n"
 "QToolButton { \n"
-"border-image:"
-                        " url(:/img/btn_mid_0.png);\n"
-"text-align: center;\n"
+"border-image: url(:/img/btn_mid_0.png);\n"
+"te"
+                        "xt-align: center;\n"
 "}\n"
 "QToolButton::menu-indicator { image: none; }\n"
 "\n"
@@ -608,9 +609,9 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "\n"
-"#extraMenuBar ."
-                        "QToolButton {\n"
-"     background-position: left center;\n"
+"#extraMenuBar .QToolButton {\n"
+"     background"
+                        "-position: left center;\n"
 "     background-repeat: no-repeat;\n"
 "	 border: none;\n"
 "	 /*border-left: 22px solid transparent;*/\n"
@@ -647,8 +648,8 @@ class Ui_MainWindow(object):
 "\n"
 "/* QMenu ------------------------------------------------------------------\n"
 "\n"
-"examples: https://doc.qt.io/"
-                        "qt-5/stylesheet-examples.html#customizing-qmenu\n"
+"examples: https://doc.qt.io/qt-5/stylesheet-examples.html#cus"
+                        "tomizing-qmenu\n"
 "\n"
 "--------------------------------------------------------------------------- */\n"
 "QMenu {\n"
@@ -690,9 +691,9 @@ class Ui_MainWindow(object):
 "\n"
 "/*\n"
 "\n"
-"QMenu::indicator:non-exclusive:unch"
-                        "ecked {\n"
-"    image: url(:/images/checkbox_unchecked.png);\n"
+"QMenu::indicator:non-exclusive:unchecked {\n"
+"    image: url(:/imag"
+                        "es/checkbox_unchecked.png);\n"
 "}\n"
 "\n"
 "QMenu::indicator:non-exclusive:unchecked:selected {\n"
@@ -730,9 +731,9 @@ class Ui_MainWindow(object):
 "  background:  rgb(40, 44, 52); \n"
 "} \n"
 "\n"
-"Q"
-                        "TabBar::tab {\n"
-"  background: rgb(40, 44, 52);; \n"
+"QTabBar::tab {\n"
+"  background: r"
+                        "gb(40, 44, 52);; \n"
 "  border: 1px solid lightgray; \n"
 "  padding: 2px;\n"
 "	padding-left: 10px;\n"
@@ -777,7 +778,6 @@ class Ui_MainWindow(object):
         self.titleLeftApp.setObjectName(u"titleLeftApp")
         self.titleLeftApp.setGeometry(QRect(60, 3, 160, 20))
         font = QFont()
-        font.setFamilies([u"Segoe UI Semibold"])
         font.setPointSize(12)
         font.setBold(False)
         font.setItalic(False)
@@ -785,9 +785,9 @@ class Ui_MainWindow(object):
         self.titleLeftApp.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
         self.topLogo = QFrame(self.topLogoInfo)
         self.topLogo.setObjectName(u"topLogo")
-        self.topLogo.setGeometry(QRect(10, 4, 42, 42))
-        self.topLogo.setMinimumSize(QSize(42, 42))
-        self.topLogo.setMaximumSize(QSize(42, 42))
+        self.topLogo.setGeometry(QRect(10, 10, 32, 32))
+        self.topLogo.setMinimumSize(QSize(32, 32))
+        self.topLogo.setMaximumSize(QSize(32, 32))
         self.topLogo.setFrameShape(QFrame.NoFrame)
         self.topLogo.setFrameShadow(QFrame.Raised)
         self.titleLeftDescription = QLabel(self.topLogoInfo)
@@ -795,7 +795,6 @@ class Ui_MainWindow(object):
         self.titleLeftDescription.setGeometry(QRect(60, 22, 160, 16))
         self.titleLeftDescription.setMaximumSize(QSize(16777215, 16))
         font1 = QFont()
-        font1.setFamilies([u"Segoe UI"])
         font1.setPointSize(8)
         font1.setBold(False)
         font1.setItalic(False)
@@ -835,14 +834,13 @@ class Ui_MainWindow(object):
         self.toggleButton.setSizePolicy(sizePolicy)
         self.toggleButton.setMinimumSize(QSize(0, 45))
         font2 = QFont()
-        font2.setFamilies([u"Segoe UI"])
         font2.setPointSize(10)
         font2.setBold(False)
         font2.setItalic(False)
         self.toggleButton.setFont(font2)
         self.toggleButton.setCursor(QCursor(Qt.PointingHandCursor))
         self.toggleButton.setLayoutDirection(Qt.LeftToRight)
-        self.toggleButton.setStyleSheet(u"background-image: url(:/icons/images/icons/icon_menu.png);")
+        self.toggleButton.setStyleSheet(u"background-image: url(:/icons/icons/icon_menu.png);")
 
         self.verticalLayout_4.addWidget(self.toggleButton)
 
@@ -871,7 +869,7 @@ class Ui_MainWindow(object):
 "	background-color: rgb(36, 209, 21);\n"
 "	text-align: left;\n"
 "	padding-left: 44px;\n"
-"    background-image: url(:/icons/images/icons/cil-media-play.png);\n"
+"	background-image: url(:/icons/icons/cil-media-play.png);\n"
 "}\n"
 "\n"
 "QPushButton:hover {\n"
@@ -897,7 +895,7 @@ class Ui_MainWindow(object):
         self.btn_home.setFont(font2)
         self.btn_home.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_home.setLayoutDirection(Qt.LeftToRight)
-        self.btn_home.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-home.png);")
+        self.btn_home.setStyleSheet(u"background-image: url(:/icons/icons/cil-home.png);")
 
         self.verticalLayout_8.addWidget(self.btn_home)
 
@@ -909,7 +907,7 @@ class Ui_MainWindow(object):
         self.btn_adc_control.setFont(font2)
         self.btn_adc_control.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_adc_control.setLayoutDirection(Qt.LeftToRight)
-        self.btn_adc_control.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-signal-cellular-3.png);")
+        self.btn_adc_control.setStyleSheet(u"background-image: url(:/icons/icons/cil-signal-cellular-3.png);")
         self.btn_adc_control.setIconSize(QSize(16, 16))
 
         self.verticalLayout_8.addWidget(self.btn_adc_control)
@@ -922,7 +920,7 @@ class Ui_MainWindow(object):
         self.btn_laser_control.setFont(font2)
         self.btn_laser_control.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_laser_control.setLayoutDirection(Qt.LeftToRight)
-        self.btn_laser_control.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-lightbulb.png);")
+        self.btn_laser_control.setStyleSheet(u"background-image: url(:/icons/icons/cil-lightbulb.png);")
 
         self.verticalLayout_8.addWidget(self.btn_laser_control)
 
@@ -932,14 +930,14 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.btn_probe_control.sizePolicy().hasHeightForWidth())
         self.btn_probe_control.setSizePolicy(sizePolicy)
         self.btn_probe_control.setMinimumSize(QSize(0, 45))
-        self.btn_probe_control.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-action-redo.png);")
+        self.btn_probe_control.setStyleSheet(u"background-image: url(:/icons/icons/cil-action-redo.png);")
 
         self.verticalLayout_8.addWidget(self.btn_probe_control)
 
         self.btn_measured_data = QPushButton(self.topMenu)
         self.btn_measured_data.setObjectName(u"btn_measured_data")
         self.btn_measured_data.setMinimumSize(QSize(0, 45))
-        self.btn_measured_data.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-description.png);")
+        self.btn_measured_data.setStyleSheet(u"background-image: url(:/icons/icons/cil-description.png);")
 
         self.verticalLayout_8.addWidget(self.btn_measured_data)
 
@@ -951,7 +949,7 @@ class Ui_MainWindow(object):
         self.btn_exit.setFont(font2)
         self.btn_exit.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_exit.setLayoutDirection(Qt.LeftToRight)
-        self.btn_exit.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-x.png);")
+        self.btn_exit.setStyleSheet(u"background-image: url(:/icons/icons/cil-x.png);")
 
         self.verticalLayout_8.addWidget(self.btn_exit)
 
@@ -974,7 +972,7 @@ class Ui_MainWindow(object):
         self.toggleLeftBox.setFont(font2)
         self.toggleLeftBox.setCursor(QCursor(Qt.PointingHandCursor))
         self.toggleLeftBox.setLayoutDirection(Qt.LeftToRight)
-        self.toggleLeftBox.setStyleSheet(u"background-image: url(:/icons/images/icons/icon_settings.png);")
+        self.toggleLeftBox.setStyleSheet(u"background-image: url(:/icons/icons/icon_settings.png);")
 
         self.verticalLayout_9.addWidget(self.toggleLeftBox)
 
@@ -1034,7 +1032,7 @@ class Ui_MainWindow(object):
         self.extraCloseColumnBtn.setMaximumSize(QSize(28, 28))
         self.extraCloseColumnBtn.setCursor(QCursor(Qt.PointingHandCursor))
         icon = QIcon()
-        icon.addFile(u":/icons/images/icons/icon_close.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile(u":/icons/icons/icon_close.png", QSize(), QIcon.Normal, QIcon.Off)
         self.extraCloseColumnBtn.setIcon(icon)
         self.extraCloseColumnBtn.setIconSize(QSize(20, 20))
 
@@ -1070,7 +1068,7 @@ class Ui_MainWindow(object):
         self.btn_share.setFont(font2)
         self.btn_share.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_share.setLayoutDirection(Qt.LeftToRight)
-        self.btn_share.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-share-boxed.png);")
+        self.btn_share.setStyleSheet(u"background-image: url(:/icons/icons/cil-share-boxed.png);")
 
         self.verticalLayout_11.addWidget(self.btn_share)
 
@@ -1082,7 +1080,7 @@ class Ui_MainWindow(object):
         self.btn_adjustments.setFont(font2)
         self.btn_adjustments.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_adjustments.setLayoutDirection(Qt.LeftToRight)
-        self.btn_adjustments.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-equalizer.png);")
+        self.btn_adjustments.setStyleSheet(u"background-image: url(:/icons/icons/cil-equalizer.png);")
 
         self.verticalLayout_11.addWidget(self.btn_adjustments)
 
@@ -1094,7 +1092,7 @@ class Ui_MainWindow(object):
         self.btn_more.setFont(font2)
         self.btn_more.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_more.setLayoutDirection(Qt.LeftToRight)
-        self.btn_more.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-layers.png);")
+        self.btn_more.setStyleSheet(u"background-image: url(:/icons/icons/cil-layers.png);")
 
         self.verticalLayout_11.addWidget(self.btn_more)
 
@@ -1196,7 +1194,6 @@ class Ui_MainWindow(object):
         self.menu_file.setMinimumSize(QSize(0, 16))
         self.menu_file.setMaximumSize(QSize(16777215, 16777215))
         font3 = QFont()
-        font3.setFamilies([u"Segoe UI"])
         font3.setPointSize(10)
         font3.setBold(False)
         font3.setItalic(False)
@@ -1265,7 +1262,7 @@ class Ui_MainWindow(object):
         self.settingsTopBtn.setMaximumSize(QSize(28, 28))
         self.settingsTopBtn.setCursor(QCursor(Qt.PointingHandCursor))
         icon1 = QIcon()
-        icon1.addFile(u":/icons/images/icons/icon_settings.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon1.addFile(u":/icons/icons/icon_settings.png", QSize(), QIcon.Normal, QIcon.Off)
         self.settingsTopBtn.setIcon(icon1)
         self.settingsTopBtn.setIconSize(QSize(20, 20))
 
@@ -1277,7 +1274,7 @@ class Ui_MainWindow(object):
         self.minimizeAppBtn.setMaximumSize(QSize(28, 28))
         self.minimizeAppBtn.setCursor(QCursor(Qt.PointingHandCursor))
         icon2 = QIcon()
-        icon2.addFile(u":/icons/images/icons/icon_minimize.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon2.addFile(u":/icons/icons/icon_minimize.png", QSize(), QIcon.Normal, QIcon.Off)
         self.minimizeAppBtn.setIcon(icon2)
         self.minimizeAppBtn.setIconSize(QSize(20, 20))
 
@@ -1288,7 +1285,6 @@ class Ui_MainWindow(object):
         self.maximizeRestoreAppBtn.setMinimumSize(QSize(28, 28))
         self.maximizeRestoreAppBtn.setMaximumSize(QSize(28, 28))
         font4 = QFont()
-        font4.setFamilies([u"Segoe UI"])
         font4.setPointSize(10)
         font4.setBold(False)
         font4.setItalic(False)
@@ -1296,7 +1292,7 @@ class Ui_MainWindow(object):
         self.maximizeRestoreAppBtn.setFont(font4)
         self.maximizeRestoreAppBtn.setCursor(QCursor(Qt.PointingHandCursor))
         icon3 = QIcon()
-        icon3.addFile(u":/icons/images/icons/icon_maximize.png", QSize(), QIcon.Normal, QIcon.Off)
+        icon3.addFile(u":/icons/icons/icon_maximize.png", QSize(), QIcon.Normal, QIcon.Off)
         self.maximizeRestoreAppBtn.setIcon(icon3)
         self.maximizeRestoreAppBtn.setIconSize(QSize(20, 20))
 
@@ -1450,7 +1446,7 @@ class Ui_MainWindow(object):
         self.btn_print.setFont(font2)
         self.btn_print.setCursor(QCursor(Qt.PointingHandCursor))
         self.btn_print.setLayoutDirection(Qt.LeftToRight)
-        self.btn_print.setStyleSheet(u"background-image: url(:/icons/images/icons/cil-print.png);")
+        self.btn_print.setStyleSheet(u"background-image: url(:/icons/icons/cil-print.png);")
 
         self.verticalLayout_14.addWidget(self.btn_print)
 
@@ -1480,7 +1476,6 @@ class Ui_MainWindow(object):
         self.creditsLabel.setObjectName(u"creditsLabel")
         self.creditsLabel.setMaximumSize(QSize(16777215, 16))
         font5 = QFont()
-        font5.setFamilies([u"Segoe UI"])
         font5.setBold(False)
         font5.setItalic(False)
         self.creditsLabel.setFont(font5)

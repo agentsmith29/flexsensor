@@ -148,12 +148,13 @@ class WidgetSettingsOutFilesFolders(QWidget):
         # self.lbl_mat_files_output.setToolTip(self.config.wafer_config.measurement_mat_file.absolute)
 
     def on_tb_log_file_text_changed(self, value):
-        if value is not None:
-            self.config.wafer_config.log_file.set(value)
-
-        val = self.config.wafer_config.log_file.get().replace(self.config.output_directory.get(), "<b>wd</b>")
-        self.lbl_log_file.setText(val)
-        self.lbl_log_file.setToolTip(self.config.wafer_config.log_file.get())
+        return
+        #if value is not None:
+        #    self.config.wafer_config.log_file.set(value)
+        #
+        #val = self.config.wafer_config.log_file.get().replace(self.config.output_directory.get(), "<b>wd</b>")
+        #self.lbl_log_file.setText(val)
+        #self.lbl_log_file.setToolTip(self.config.wafer_config.log_file.get())
 
 
 class WidgetAD2Settings(QWidget):

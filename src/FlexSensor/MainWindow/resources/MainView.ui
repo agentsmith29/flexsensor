@@ -79,7 +79,7 @@ Left Menu */
 }
 #topLogo {
 	background-color: rgb(33, 37, 43);
-	border-image: url(:/images/images/images/FlexSensorIcon.png) 10 0 0 0 strech strech;
+	border-image: url(:/images/FlexSensorIcon_256.png) 10 0 0 0 strech strech;
 	background-position: centered;
 	background-repeat: no-repeat;
 }
@@ -161,7 +161,7 @@ Extra Tab */
 #extraIcon {
 	background-position: center;
 	background-repeat: no-repeat;
-	background-image: url(:/icons/images/icons/icon_settings.png);
+	background-image: url(:/icons/icons/icon_settings.png);
 }
 
 /* Label */
@@ -412,7 +412,7 @@ QCheckBox::indicator:hover {
 QCheckBox::indicator:checked {
     background: 3px solid rgb(52, 59, 72);
 	border: 3px solid rgb(52, 59, 72);	
-	background-image: url(:/icons/images/icons/cil-check-alt.png);
+	background-image: url(:/icons/icons/cil-check-alt.png);
 }
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -453,7 +453,7 @@ QComboBox::drop-down {
 	border-left-style: solid;
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;	
-	background-image: url(:/icons/images/icons/cil-arrow-bottom.png);
+	background-image: url(:/icons/icons/cil-arrow-bottom.png);
 	background-position: center;
 	background-repeat: no-reperat;
  }
@@ -1017,7 +1017,7 @@ QTabBar::tab:selected {
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/icon_menu.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/icon_menu.png);</string>
                   </property>
                   <property name="text">
                    <string>Hide</string>
@@ -1083,7 +1083,7 @@ QTabBar::tab:selected {
 	background-color: rgb(36, 209, 21);
 	text-align: left;
 	padding-left: 44px;
-    background-image: url(:/icons/images/icons/cil-media-play.png);
+	background-image: url(:/icons/icons/cil-media-play.png);
 }
 
 QPushButton:hover {
@@ -1137,7 +1137,7 @@ QPushButton:pressed {
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/cil-home.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/cil-home.png);</string>
                   </property>
                   <property name="text">
                    <string>Home</string>
@@ -1172,7 +1172,7 @@ QPushButton:pressed {
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/cil-signal-cellular-3.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/cil-signal-cellular-3.png);</string>
                   </property>
                   <property name="text">
                    <string>ADC Control</string>
@@ -1213,7 +1213,7 @@ QPushButton:pressed {
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/cil-lightbulb.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/cil-lightbulb.png);</string>
                   </property>
                   <property name="text">
                    <string>Laser Control</string>
@@ -1238,7 +1238,7 @@ QPushButton:pressed {
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/cil-action-redo.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/cil-action-redo.png);</string>
                   </property>
                   <property name="text">
                    <string>Probe Control</string>
@@ -1254,7 +1254,7 @@ QPushButton:pressed {
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/cil-description.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/cil-description.png);</string>
                   </property>
                   <property name="text">
                    <string>Measured Data</string>
@@ -1289,7 +1289,7 @@ QPushButton:pressed {
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/cil-x.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/cil-x.png);</string>
                   </property>
                   <property name="text">
                    <string>Exit</string>
@@ -1351,7 +1351,7 @@ QPushButton:pressed {
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/icon_settings.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/icon_settings.png);</string>
                   </property>
                   <property name="text">
                    <string>Left Box</string>
@@ -1515,8 +1515,8 @@ QPushButton:pressed {
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../../resources.qrc">
-                   <normaloff>:/icons/images/icons/icon_close.png</normaloff>:/icons/images/icons/icon_close.png</iconset>
+                  <iconset resource="../../resources/resources.qrc">
+                   <normaloff>:/icons/icons/icon_close.png</normaloff>:/icons/icons/icon_close.png</iconset>
                  </property>
                  <property name="iconSize">
                   <size>
@@ -1607,7 +1607,7 @@ QPushButton:pressed {
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/cil-share-boxed.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/cil-share-boxed.png);</string>
                   </property>
                   <property name="text">
                    <string>Share</string>
@@ -1642,7 +1642,7 @@ QPushButton:pressed {
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/cil-equalizer.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/cil-equalizer.png);</string>
                   </property>
                   <property name="text">
                    <string>Adjustments</string>
@@ -1677,7 +1677,7 @@ QPushButton:pressed {
                    <enum>Qt::LeftToRight</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-image: url(:/icons/images/icons/cil-layers.png);</string>
+                   <string notr="true">background-image: url(:/icons/icons/cil-layers.png);</string>
                   </property>
                   <property name="text">
                    <string>More</string>
@@ -2082,8 +2082,8 @@ p, li { white-space: pre-wrap; }
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../resources.qrc">
-                    <normaloff>:/icons/images/icons/icon_settings.png</normaloff>:/icons/images/icons/icon_settings.png</iconset>
+                   <iconset resource="../../resources/resources.qrc">
+                    <normaloff>:/icons/icons/icon_settings.png</normaloff>:/icons/icons/icon_settings.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2117,8 +2117,8 @@ p, li { white-space: pre-wrap; }
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../resources.qrc">
-                    <normaloff>:/icons/images/icons/icon_minimize.png</normaloff>:/icons/images/icons/icon_minimize.png</iconset>
+                   <iconset resource="../../resources/resources.qrc">
+                    <normaloff>:/icons/icons/icon_minimize.png</normaloff>:/icons/icons/icon_minimize.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2160,8 +2160,8 @@ p, li { white-space: pre-wrap; }
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../resources.qrc">
-                    <normaloff>:/icons/images/icons/icon_maximize.png</normaloff>:/icons/images/icons/icon_maximize.png</iconset>
+                   <iconset resource="../../resources/resources.qrc">
+                    <normaloff>:/icons/icons/icon_maximize.png</normaloff>:/icons/icons/icon_maximize.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2195,8 +2195,8 @@ p, li { white-space: pre-wrap; }
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../resources.qrc">
-                    <normaloff>:/icons/images/icons/icon_close.png</normaloff>:/icons/images/icons/icon_close.png</iconset>
+                   <iconset resource="../../resources/resources.qrc">
+                    <normaloff>:/icons/icons/icon_close.png</normaloff>:/icons/icons/icon_close.png</iconset>
                   </property>
                   <property name="iconSize">
                    <size>
@@ -2476,7 +2476,7 @@ p, li { white-space: pre-wrap; }
                             <enum>Qt::LeftToRight</enum>
                            </property>
                            <property name="styleSheet">
-                            <string notr="true">background-image: url(:/icons/images/icons/cil-print.png);</string>
+                            <string notr="true">background-image: url(:/icons/icons/cil-print.png);</string>
                            </property>
                            <property name="text">
                             <string>Print</string>
@@ -2602,7 +2602,7 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <resources>
-  <include location="../../resources.qrc"/>
+  <include location="../../resources/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

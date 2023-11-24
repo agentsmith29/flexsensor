@@ -4,6 +4,8 @@ Author(s): Christoph Schmidt <christoph.schmidt@tugraz.at>
 Created: 2023-10-19 12:35
 Package Version:
 """
+from pathlib import Path
+
 import confighandler as cfg
 
 from .AppSettings import AppSettings
@@ -21,7 +23,7 @@ class FlexSensorConfig(cfg.ConfigNode):
         self.wafer_number = cfg.Field("T40741W177G0", friendly_name="Wafer Number",
                                       description="Wafer Number to be measured")
 
-        self.output_directory = cfg.Field("./", friendly_name="Output Directory",
+        self.output_directory = cfg.Field(Path("./"), friendly_name="Output Directory",
                                      description="Measurement output directory")
 
         self.wafer_config = WaferConfig()

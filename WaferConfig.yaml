@@ -1,0 +1,10 @@
+# - Configuration file stored 2023-11-24 11:46:57.988160 - 
+WaferConfig: #!!python/object:controller.WaferConfig
+ dies: "MaskARY1_Jakob_full" # dies: None
+ structure_file: "@Path:<../vas-files/list_of_structures_picasso.vas>" # structure_file: None
+ wafermap_file: "@Path:<../Wafermapary1_48dies.map>" # wafermap_file: None
+ log_file: "@Path:<{output_directory}/log_{date_time}.log>" # log_file: None
+ measurement_output: "@Path:<{output_directory}/measurement/measurement_{date_time}.csv>" # measurement_output: None
+ measurement_mat_file: "@Path:<{output_directory}/measurement/measurement_die_{die}_struct_{structure}_{date_time}_{it}.mat>" # measurement_mat_file: None
+ scope_image_file: "@Path:<{output_directory}/scope_shots/scope_{wafer_nr}_die_{die}_struct_{structure}_{time}.png>" # scope_image_file: None
+ bookmark_file: "@Path:<{output_directory}/klayout_bookmarks/bookmarks_{wafer_version}.lyb>" # bookmark_file: None

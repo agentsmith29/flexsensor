@@ -6,7 +6,7 @@ import FlexSensor.Prober as Prober
 import confighandler as Config
 
 import MeasurementEvaluationTool as met
-#import ConfigHandler as Config
+# import ConfigHandler as Config
 from MeasurementRoutines.MeasurementRoutine import MeasurementRoutine
 from FlexSensor.FlexSensorConfig import FlexSensorConfig
 
@@ -20,6 +20,7 @@ class MainThreadSignals(QObject):
 
     measurement_routine_changed = Signal(MeasurementRoutine)
 
+
 class MainThreadModel(QObject):
 
     def __init__(self, config: FlexSensorConfig):
@@ -30,8 +31,6 @@ class MainThreadModel(QObject):
         self._config: FlexSensorConfig = config
 
         self._measurement_routine: MeasurementRoutine = None
-
-
 
         self._ad2_model: AD2Dev.Model = AD2Dev.Model(self.config.captdev_config)
         self._ad2_controller: AD2Dev.Controller = AD2Dev.Controller(self._ad2_model)
@@ -48,12 +47,9 @@ class MainThreadModel(QObject):
         self._prober_window: Prober.ControlWindow = Prober.ControlWindow(self._prober_model, self._prober_controller)
 
         # Widgets
-        self.mea_eval_tool_model: met.Model  = met.Model()
-        self.mea_eval_tool_controller: met.Controller = met.Controller(
-            self.mea_eval_tool_model)
-        self.mea_eval_tool_window: met.View = met.View(
-            self.mea_eval_tool_model,
-            self.mea_eval_tool_controller)
+        self.mea_eval_tool_model: met.Model = met.Model()
+        self.mea_eval_tool_controller: met.Controller = met.Controller(self.mea_eval_tool_model)
+        self.mea_eval_tool_window: met.View = met.View(self.mea_eval_tool_model, self.mea_eval_tool_controller)
 
     # Implement all getter and setter methods for the model here
     @property
@@ -74,7 +70,6 @@ class MainThreadModel(QObject):
         self._laser_model = value
         self.signals.laser_changed.emit(self.laser_model, self.laser_controller, self.laser_window)
 
-
     @property
     def laser_controller(self) -> Laser.Controller:
         return self._laser_controller
@@ -92,7 +87,6 @@ class MainThreadModel(QObject):
     def laser_window(self, value: Laser.View):
         self._laser_window = value
         self.signals.laser_changed.emit(self.laser_model, self.laser_controller, self.laser_window)
-
 
     @property
     def ad2_model(self) -> AD2Dev.Model:
@@ -148,7 +142,6 @@ class MainThreadModel(QObject):
         self._prober_window = value
         self.signals.prober_changed.emit(self.prober_model, self.prober_controller, self.prober_window)
 
-
     @property
     def measurement_routine(self) -> MeasurementRoutine:
         return self._measurement_routine
@@ -157,9 +150,3 @@ class MainThreadModel(QObject):
     def measurement_routine(self, value: MeasurementRoutine):
         self._measurement_routine = value
         self.signals.measurement_routine_changed.emit(self.measurement_routine)
-
-
-
-
-
-

@@ -63,9 +63,9 @@ class MeasurementRoutine(BaseMeasurementRoutine):
     @Slot()
     def run(self):
         self.logger.info(f"<< Input file {self.config.wafer_config.get_structure_file().relative}")
-        self.logger.info(f">> Working directory {self.config.get_output_directory().relative}")
-        self.logger.info(f">> Log File {self.config.wafer_config.get_log_file().relative}")
-        self.logger.info(f">> Measurments CVS File {self.config.wafer_config.get_measurement_output().relative}")
+        self.logger.info(f">> Working directory {self.config.output_directory.get().relative}")
+        self.logger.info(f">> Log File {self.config.wafer_config.log_file.get().relative}")
+        self.logger.info(f">> Measurments CVS File {self.config.wafer_config.measurement_output().relative}")
         self.logger.info(f">> Measurments Mat File {self.config.wafer_config.get_measurement_mat_file().relative}")
         self.logger.info(f">> KLayout Bookmark file {self.config.wafer_config.get_bookmark_file().relative}")
         self.logger.info(f">> Scope Image File {self.config.wafer_config.get_scope_image_file().relative}")

@@ -1,0 +1,49 @@
+# - Configuration file stored 2023-11-24 11:47:09.019578 - 
+FlexSensorConfig: #!!python/object:controller.FlexSensorConfig
+ wafer_version: "MaskARY1_Jakob_full" # Wafer Version: Wafer Version to be measured
+ wafer_number: "T40741W177G0" # Wafer Number: Wafer Number to be measured
+ output_directory: "@Path:<.>" # Output Directory: Measurement output directory
+
+# Sub-Configurations
+ wafer_config: #!!python/object:controller.WaferConfig
+   dies: "MaskARY1_Jakob_full" # dies: None
+   structure_file: "@Path:<H:/ET PhD - Dokumente/Silicon Photonics/FlexSensor 6/flexsensor-public/flexsensor/jakob.vas>" # structure_file: None
+   wafermap_file: "@Path:<H:/ET PhD - Dokumente/Silicon Photonics/FlexSensor 6/flexsensor-public/flexsensor/Wafermapary1_48dies.map>" # wafermap_file: None
+   log_file: "@Path:<{output_directory}/log_{date_time}.log>" # log_file: None
+   measurement_output: "@Path:<{output_directory}/measurement/measurement_{date_time}.csv>" # measurement_output: None
+   measurement_mat_file: "@Path:<{output_directory}/measurement/measurement_die_{die}_struct_{structure}_{date_time}_{it}.mat>" # measurement_mat_file: None
+   scope_image_file: "@Path:<{output_directory}/scope_shots/scope_{wafer_nr}_die_{die}_struct_{structure}_{time}.png>" # scope_image_file: None
+   bookmark_file: "@Path:<{output_directory}/klayout_bookmarks/bookmarks_{wafer_version}.lyb>" # bookmark_file: None
+
+ app_config: #!!python/object:controller.AppSettings
+   ENABLE_CUSTOM_TITLE_BAR: True # ENABLE_CUSTOM_TITLE_BAR: None
+   MENU_WIDTH: 240 # MENU_WIDTH: None
+   LEFT_BOX_WIDTH: 240 # LEFT_BOX_WIDTH: None
+   RIGHT_BOX_WIDTH: 240 # RIGHT_BOX_WIDTH: None
+   TIME_ANIMATION: 500 # TIME_ANIMATION: None
+   BTN_LEFT_BOX_COLOR: "background-color: rgb(44, 49, 58);" # BTN_LEFT_BOX_COLOR: None
+   BTN_RIGHT_BOX_COLOR: "background-color: #ff79c6;" # BTN_RIGHT_BOX_COLOR: None
+   MENU_SELECTED_STYLESHEET: "
+           border-left: 22px solid qlineargradient(spread:pad, x1:0.034, y1:0, x2:0.216, y2:0, stop:0.499 rgba(255, 121, 198, 255), stop:0.5 rgba(85, 170, 255, 0));
+           background-color: rgb(40, 44, 52);
+           " # MENU_SELECTED_STYLESHEET: None
+
+ laser_config: #!!python/object:controller.LaserConfig
+   wl_sweep_start: 850 # wl_sweep_start: None
+   wl_sweep_stop: 850 # wl_sweep_stop: None
+   velocity: 1.0 # velocity: None
+   acceleration: 2.0 # acceleration: None
+   deceleration: 1.0 # deceleration: None
+   available_ports: ['USB0', 'USB1', 'USB2', 'USB3', 'USB4', 'USB5', 'USB6', 'USB7', 'USB8', 'USB9'] # available_ports: None
+   port: "USB0" # port: None
+
+ captdev_config: #!!python/object:controller.CaptDeviceConfig
+   sample_rate: 50000 # Sample rate: Sample rate of the device
+   streaming_rate: 500 # Streaming rate: Streaming rate in Hz (should be below 1kHz)
+   ain_channel: 0 # Analog In Channel: Analog in channel. Defines which channel is used for capturing.
+   show_simulator: True # Show Simulators: Show available simulators in the device list provided by the DreamWaves API.
+   streaming_history: 2000 # Streaming history (ms): Defines the range of the stream in ms
+   total_samples: 200000 # total_samples: None
+   sample_time: 45 # sample_time: None
+   ad2_raw_out_file: "{output_directory}/measurement/ad2_raw/ad2_out_{wafer_nr}_{date}.csv" # ad2_raw_out_file: None
+

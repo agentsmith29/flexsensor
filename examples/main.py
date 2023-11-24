@@ -26,10 +26,12 @@ def main(argv):
     FlexSensor.ApplicationInit.set_icon(app)
 
     # Read the inital config file
-    vaut_config = FlexSensor.ApplicationInit.load_config_file(f"{FlexSensor.configs_root}/init_config.yaml")
+    config = FlexSensor.ApplicationInit.load_config_file(f"{FlexSensor.configs_root}/init_config.yaml")
 
     logging.info(f"Starting Velox GUI Version {FlexSensor.__version__}")
-    main_model = FlexSensor.MainThreadModel(config=vaut_config)
+    main_model = FlexSensor.MainThreadModel(config=config)
+    wdg = config.view.widget()
+    wdg.show()
     main_controller = FlexSensor.MainThreadController(main_model)
     main_window = FlexSensor.MainWindow(main_model, main_controller)
 
