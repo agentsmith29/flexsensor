@@ -1,0 +1,7 @@
+# - Configuration file stored 2024-01-07 19:15:50.237051 - 
+LaserLibSimulatorConfig: #!!python/object:controller.LaserLibSimulatorConfig
+ currentWavelengthPositionIs: 0.0 # Current wavelength position: Current wavelength position in nm
+ current_wavelength: 840.0 # Current wavelength: Current wavelength in nm
+ velocity: 1.0 # Velocity: Velocity in nm/s
+ acceleration: 2.0 # Acceleration: Acceleration in nm/s^2
+ deceleration: 2.0 # Deceleration: Deceleration in nm/s^2
