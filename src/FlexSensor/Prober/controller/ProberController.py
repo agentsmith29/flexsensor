@@ -3,17 +3,21 @@ import logging
 import confighandler as Config
 #from ConfigHandler.controller.VAutomatorConfig import VAutomatorConfig
 import FlexSensor.Prober as Prober
+from FlexSensor.FSBase import FSBase
 from FlexSensor.Prober.controller.OpticalInterface import OpticalInterface
 from FlexSensor.Prober.model.ProberModel import ProberModel
 from FlexSensor.constants.FlexsensorConstants import Probe
 from FlexSensor.generics.generics import pch
 
 
-class ProberController:
-    def __init__(self, model: ProberModel, *args, **kwargs):
-
+class ProberController(FSBase):
+    def __init__(self, model: ProberModel,
+                 enable_log=True, log_level=logging.DEBUG, log_file=None,
+                 *args, **kwargs):
+        super().__init__()
         self.model = model
-        self.logger = logging.getLogger("Prober")
+        self.logger = self.create_new_logger(self.name, enabled=enable_log, level=log_level)
+
         self.signals = Prober.Signals()
         self.msg_server = Prober.MessageServerInterface()
 

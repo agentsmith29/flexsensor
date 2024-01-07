@@ -1,13 +1,16 @@
 import sys
 import logging
 
+from FlexSensor.FSBase import FSBase
 
-class OpticalProbesPosition:
+
+class OpticalProbesPosition(FSBase):
 
     def __init__(self, input: tuple, output: tuple):
+        super().__init__()
         self.INPUT: ProbePosition = ProbePosition(input)
         self.OUT: ProbePosition = ProbePosition(output)
-        self.logger = logging.getLogger('OpticalProbesPosition')
+        self.logger = self.create_new_logger(self.name)
 
 
     def __str__(self):

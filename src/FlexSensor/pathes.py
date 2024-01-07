@@ -6,9 +6,9 @@
 import os
 import pathlib
 
-content_root = "."
+content_root = "./src/FlexSensor"
 
 # DO not change this unless you know what you are doing!
-image_root = str(pathlib.Path(f"{content_root}/../images").resolve().absolute())
+image_root = str(pathlib.Path(f"{content_root}/resources").resolve().absolute())
 libs_root = str(pathlib.Path(f"{content_root}/libs").resolve().absolute())
 configs_root = str(pathlib.Path(f"{content_root}/../configs").resolve().absolute())

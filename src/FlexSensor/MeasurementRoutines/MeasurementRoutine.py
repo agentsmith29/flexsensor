@@ -1,4 +1,5 @@
 import logging
+import time
 import traceback
 from datetime import datetime
 
@@ -13,6 +14,8 @@ from generics.generics import pch
 import FlexSensor.Prober as Prober
 from FlexSensor.FlexSensorConfig import FlexSensorConfig
 from FlexSensor.MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
+from FlexSensor.MeasurementData.Properties.AD2CaptDeviceProperties import AD2CaptDeviceProperties
+from FlexSensor.MeasurementData.Properties.LaserProperties import LaserProperties
 from FlexSensor.MeasurementData.Properties.MeasurementProperties import MPropertiesFindPeaks, \
     MeasurementProperties, WaveguidePropertiesMZI
 from FlexSensor.MeasurementData.Properties.WaferProperties import WaferProperties
@@ -56,19 +59,19 @@ class MeasurementRoutine(BaseMeasurementRoutine):
         self.probe_height = 80
 
         self.logger.info(
-            f"Init Prober Class. Number of runs per die: {self.number_of_runs}, dies {self.config.wafer_config.dies}\n"
+            f"Init Prober Class. Number of runs per die: {self.number_of_runs}, dies {self.config.wafer_config.dies.get()}\n"
             f"Measurement CVS File = {self.config.wafer_config.measurement_output}\n"
             f"Measurement Mat File = {self.config.wafer_config.measurement_mat_file}")
 
     @Slot()
     def run(self):
-        self.logger.info(f"<< Input file {self.config.wafer_config.get_structure_file().relative}")
-        self.logger.info(f">> Working directory {self.config.output_directory.get().relative}")
-        self.logger.info(f">> Log File {self.config.wafer_config.log_file.get().relative}")
-        self.logger.info(f">> Measurments CVS File {self.config.wafer_config.measurement_output().relative}")
-        self.logger.info(f">> Measurments Mat File {self.config.wafer_config.get_measurement_mat_file().relative}")
-        self.logger.info(f">> KLayout Bookmark file {self.config.wafer_config.get_bookmark_file().relative}")
-        self.logger.info(f">> Scope Image File {self.config.wafer_config.get_scope_image_file().relative}")
+        self.logger.info(f"<< Input file {self.config.wafer_config.structure_file.get()}")
+        self.logger.info(f">> Working directory {self.config.output_directory.get()}")
+        self.logger.info(f">> Log File {self.config.wafer_config.log_file.get()}")
+        self.logger.info(f">> Measurements CVS File {self.config.wafer_config.measurement_output.get()}")
+        self.logger.info(f">> Measurements Mat File {self.config.wafer_config.measurement_mat_file.get()}")
+        self.logger.info(f">> KLayout Bookmark file {self.config.wafer_config.bookmark_file.get()}")
+        self.logger.info(f">> Scope Image File {self.config.wafer_config.scope_image_file.get()}")
 
         # as long as the connection was successful, we can send some commands.
         # if it was not successful, an exception is thrown.
@@ -95,7 +98,7 @@ class MeasurementRoutine(BaseMeasurementRoutine):
             print(self.prober)
             contact, overtravel, align_dist, sep_dis, search_gap = self.prober.check_contact_height_set()
 
-            for die_idx, die_no in enumerate(self.config.wafer_config.dies):
+            for die_idx, die_no in enumerate(self.config.wafer_config.dies.get()):
                 # Move to die
                 self.write_log("info", f"Processing die {die_no} (#{die_idx})")
                 self.die_no, self.chuck_col, self.chuck_row = self.prober.move_to_die(die_no)
@@ -187,14 +190,14 @@ class MeasurementRoutine(BaseMeasurementRoutine):
     def _step_snap_image(self, scope_file, fmt):
         # Here we adapt filename of the scope by passing the correct keywords
         try:
-            self.write_log("info", f"{fmt} Saving scope image to {scope_file.relative}")
-            self.prober.snap_image("eVue2", scope_file.absolute, 2)
+            self.write_log("info", f"{fmt} Saving scope image to {scope_file}")
+            self.prober.snap_image("eVue2", scope_file, 2)
         except Exception as e:
-            self.logger.warning(f"{fmt} Cannot save scope image to {scope_file.relative}: {e}\n\n"
+            self.logger.warning(f"{fmt} Cannot save scope image to {scope_file}: {e}\n\n"
                                 f"{traceback.format_exc()}")
 
             self.signals.warning.emit(type(e),
-                                      f"Cannot save scope image to {scope_file.relative}. {e}",
+                                      f"Cannot save scope image to {scope_file}. {e}",
                                       traceback.format_exc())
 
     def _step_search_for_light(self, fmt):
@@ -232,7 +235,13 @@ class MeasurementRoutine(BaseMeasurementRoutine):
         #captured_values = self.ad2device.model.recorded_samples  # Just starts an endless loop
         #print(len(captured_values))
         #measure_time = self.ad2device.model.recording_time
-        captured_values, measure_time = self.laser.sweep_and_measure()
+        self.laser.start_wavelength_sweep.emit(self.laser.model.sweep_start_wavelength,
+                                          self.laser.model.sweep_stop_wavelength)
+        while self.laser.model.wavelength_sweep_running:
+            self.logger.info(f"{fmt} Wavelength sweep running. Waiting for sweep to finish.")
+            time.sleep(1)
+        measure_time = self.ad2device.model.capturing_information.recording_time
+        captured_values = self.ad2device.model.capturing_information.recorded_samples
 
         self.write_log("info", f"{self.formatter} Finished data acquisition: {len(captured_values)}. Took {round(measure_time, 5)} seconds.")
         return measure_time, captured_values
@@ -242,8 +251,12 @@ class MeasurementRoutine(BaseMeasurementRoutine):
       
         try:
             cur_measured_signal = SingleMeasuredData(
-                laser_properties=self.laser.model.laser_properties,
-                ad2_properties=self.ad2device.model.ad2_properties,
+                laser_properties=LaserProperties(
+                mcpy.Rectangular(2, 0.01, unit='nm/s'),
+                mcpy.Rectangular(2, 0.01, unit='nm/s'),
+                mcpy.Rectangular(0.5, 0.01, unit='nm/s^2'),
+                (mcpy.Rectangular(835, 0.01, unit='nm'), mcpy.Rectangular(870, 0.01, unit='nm'))),
+                ad2_properties=AD2CaptDeviceProperties( 0, 0, 0, 0, 0),
                 wafer_properties=wafer_properties,
                 waveguide_properties=WaveguidePropertiesMZI(
                     length1=mcpy.Rectangular(10e6, 20, unit='nm'),
@@ -321,8 +334,10 @@ class MeasurementRoutine(BaseMeasurementRoutine):
         # Create the correct file for the scope image
         # self.vaut_config.wafer_config.get_scope_image_file().set_obj(
         #    keywords={"{die}": self.die_no, "{structure}": self.structure.name, "{it}": 1})
-        self._step_snap_image(self.config.wafer_config.get_scope_image_file(
-            keywords={"{die}": self.die_no, "{structure}": self.structure.name}), self.formatter)
+        self._step_snap_image(
+            str(self.config.wafer_config.scope_image_file.get()).
+            replace("{die}", str(self.die_no)).
+            replace("{structure}", str(self.structure.name)), self.formatter)
 
         # Search for the light
         self._step_search_for_light(self.formatter)
@@ -337,7 +352,7 @@ class MeasurementRoutine(BaseMeasurementRoutine):
             # For displaying the data in the GUI
             measure_time, captured_values = self._step_capture_transmission(rep, self.formatter)
             data = [[
-                self.config.wafer_nr, self.die_no, self.chuck_col,
+                self.config.wafer_number.get(), self.die_no, self.chuck_col,
                 self.chuck_row, timestamp, str(self.structure), rep,
                 self.structure.x_in, self.structure.y_in,
                 self.structure.x_out, self.structure.y_out,
@@ -346,20 +361,20 @@ class MeasurementRoutine(BaseMeasurementRoutine):
             self.siph_data = pd.concat([self.siph_data, pd.DataFrame(data, columns=self.columns)])
 
             try:
-                self.siph_data.to_csv(str(self.config.wafer_config.get_measurement_output()))
+                self.siph_data.to_csv(str(self.config.wafer_config.measurement_output.get()))
                 self.siph_data.to_excel(
                     str(self.config.wafer_config.get_measurement_output()).replace('csv', 'xlsx'))
             except Exception as e:
                 self._write_error("Write SiPh", f"Could not write sphi data to file "
-                                                f"{self.config.wafer_config.get_measurement_output()}", e,
+                                                f"{self.config.wafer_config.measurement_output.get()}", e,
                                   traceback)
                 self.signals.error.emit((type(e),
                                          f"Could not write sphi data to file "
-                                         f"{self.config.wafer_config.get_measurement_output()}: {e}",
+                                         f"{self.config.wafer_config.measurement_output.get()}: {e}",
                                          traceback.format_exc()))
 
             wafer_properties = WaferProperties(
-                wafer_number=self.config.wafer_nr,
+                wafer_number=self.config.wafer_number.get(),
                 structure_name=self.structure.name,
                 die_nr=self.die_no,
                 chuck_col=self.chuck_col,
@@ -368,21 +383,21 @@ class MeasurementRoutine(BaseMeasurementRoutine):
                 structure_out=(self.structure.x_out, self.structure.y_out),
                 repetitions=rep)
            
-            cur_measured_signal = self._step_create_MeasuredSignal(
-                self.siph_data, 
-                captured_values,
-                wafer_properties)
+            #cur_measured_signal = self._step_create_MeasuredSignal(
+            #    self.siph_data,
+            #    captured_values,
+            #    wafer_properties)
 
-            cur_measured_signal._save_mat_file(
-                filename=self.config.wafer_config.get_measurement_mat_file(keywords={"{die}": self.die_no,
-                                                                                          "{structure}": self.structure.name,
-                                                                                          "{it}": f"rep_{rep + 1}"}).absolute
-            )
+            #cur_measured_signal._save_mat_file(
+            #    filename=self.config.wafer_config.get_measurement_mat_file(keywords={"{die}": self.die_no,
+            #                                                                              "{structure}": self.structure.name,
+            #                                                                              "{it}": f"rep_{rep + 1}"}).absolute
+            #)
 
 
             rep += 1
             self.logger.info(f"Repetition {rep}/{self.structure.repetitions} measured successfully!")
-            self.signals.routine_iteration_finished.emit(cur_measured_signal, rep)
+            #self.signals.routine_iteration_finished.emit(cur_measured_signal, rep)
             # Report the progress to the frontend
         self.write_log("info", "[OK] Continuing with next structure.")
         # idx_struct = idx_struct + 1

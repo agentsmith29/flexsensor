@@ -13,6 +13,8 @@ from pyqtgraph.dockarea import *
 
 import FlexSensor.__version__ as fsversion
 import confighandler as Config
+
+from FlexSensor.FSBase import FSBase
 from FlexSensor.MainWindow.view.BaseWindow import BaseWindow
 from FlexSensor.MainWindow.view.widgets.HomeStatusWidget import HomeStatusWidget
 from FlexSensor.MainWindow.view.widgets.MenuBarDefinition import MenuBarDefinition
@@ -32,11 +34,13 @@ from FlexSensor.constants.qs_style_sheets import CSSPlayPushButton
 from FlexSensor.generics.VASInputFileParser import VASInputFileParser
 
 
-class MainWindow(BaseWindow):
+class MainWindow(BaseWindow, FSBase):
 
     def __init__(self, model: MainThreadModel, controller: MainThreadController):
         super().__init__(Ui_MainWindow(), model.config)
-        self.logger = logging.getLogger("MainThread (UI)")
+        self.logger = self.create_new_logger(
+            self.name
+        )
 
         self._model: MainThreadModel = model
         self._controller: MainThreadController = controller
@@ -129,7 +133,7 @@ class MainWindow(BaseWindow):
         self.configView = self.model.config.view
         tab_input = tabwidget.addTab(WidgetSettingsInFilesFolders(self.model.config), "Input")
         tab_folders = tabwidget.addTab(WidgetSettingsOutFilesFolders(self.model.config), "Folder Settings")
-        tab_ad2 = tabwidget.addTab(WidgetAD2Settings(self.model.config), "AD2 Settings")
+        tab_ad2 = tabwidget.addTab(WidgetAD2Settings(self.model.config.captdev_config), "AD2 Settings")
         tab_laser = tabwidget.addTab(WidgetLaserSettings(self.model.config.laser_config), "Laser Settings")
         #tab_yaml = tabwidget.addTab(self.configView, "YAML Config")
         #tabwidget.currentChanged.connect(
@@ -381,7 +385,7 @@ class MainWindow(BaseWindow):
 
     def closeEvent(self, event):
         # do stuff
-        self.model.ad2_controller.stop_process()
+        self.model.ad2_controller.exit()
         self.model.laser_controller.stop_process()
         event.accept() # let the window close
 

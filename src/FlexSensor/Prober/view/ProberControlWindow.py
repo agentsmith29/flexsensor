@@ -50,7 +50,7 @@ class ProberControlWindow(QMainWindow):
 
 
 if __name__ == "__main__":
-    setup_logging()
+    #setup_logging()
     logging.warning("ProberControlWindow.py is not meant to be run as a script.")
 
     app = QApplication()

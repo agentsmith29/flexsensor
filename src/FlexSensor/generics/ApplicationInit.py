@@ -27,34 +27,31 @@ class ApplicationInit:
     def load_config_file(file_path):
         file_path = pathlib.PurePosixPath(pathlib.Path(file_path).absolute())
         if not os.path.isfile(file_path):
-            logging.info(f"Configuration file {file_path} not found")
+            #logging.info(f"Configuration file {file_path} not found")
             file_dialog = QFileDialog()
+            #file_dialog.setFilter("FlexSensor YAML Config File  (*.yaml)")
             file_dialog.setFileMode(QFileDialog.ExistingFile)
-            file_path, _ = file_dialog.getOpenFileName(None, "Select a Configuration File")
+            # Set the type of files that can be selected
+            file_path, _ = file_dialog.getOpenFileName(None, "Select a Configuration File", filter="FlexSensor Config (*.yaml)")
         # check if file dialog cancle was clicked
         vaut_config = FlexSensorConfig()
+        vaut_config.module_log_level = logging.DEBUG
+        vaut_config.module_log_enabled = True
         if file_path != "":
-            vaut_config = FlexSensorConfig.load(file_path)
-            logging.info(f"Loading configuration file {file_path}")
-        logging.info(vaut_config)
+             vaut_config.load(file=file_path, as_auto_save=True)
+            #logging.info(f"Loading configuration file {file_path}")
+        #logging.info(vaut_config)
         return vaut_config
 
     @staticmethod
-    def setup_logging(window: ConsoleWindow = None):
-        for log_name, log_obj in logging.Logger.manager.loggerDict.items():
-            if log_name != '<module name>':
-                log_obj.disabled = True
-        # Format the Rich logger
-        FORMAT = "%(message)s"
-        if window is not None:
-            logging.basicConfig(
-                level="DEBUG", format=FORMAT, datefmt="[%X]", handlers=[
-                    RichHandler(rich_tracebacks=True), window.handler
-                ]
-            )
-        else:
-            logging.basicConfig(
-                level="DEBUG", format=FORMAT, datefmt="[%X]", handlers=[
-                    RichHandler(rich_tracebacks=True)
-                ]
-            )
+    def setup_logging(console_window=None):
+        # disable matplotlib logging
+        logging.getLogger('matplotlib').setLevel(logging.WARNING)
+        FORMAT = "%(name)s %(message)s"
+        logging.basicConfig(
+            level="INFO", format=FORMAT, datefmt="[%X]", handlers=[
+                RichHandler(rich_tracebacks=True)
+            ]
+        )
+        if console_window is not None:
+            logging.getLogger().addHandler(console_window)

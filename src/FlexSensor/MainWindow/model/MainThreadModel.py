@@ -1,3 +1,5 @@
+from multiprocessing import Value
+
 from PySide6.QtCore import QObject, Signal
 
 import LaserControl as Laser
@@ -32,19 +34,20 @@ class MainThreadModel(QObject):
 
         self._measurement_routine: MeasurementRoutine = None
 
-        self._ad2_model: AD2Dev.Model = AD2Dev.Model(self.config.captdev_config)
-        self._ad2_controller: AD2Dev.Controller = AD2Dev.Controller(self._ad2_model)
-        self._ad2_window: AD2Dev.View = AD2Dev.View(self._ad2_model, self._ad2_controller)
+        self.start_capture_flag: Value = Value('i', 0)
+        self._ad2_model: AD2Dev.Model = None
+        self._ad2_controller: AD2Dev.Controller = None
+        self._ad2_window: AD2Dev.View = None
 
         # Devices
-        self._laser_model: Laser.Model = Laser.Model(self.config.laser_config)
-        self._laser_controller: Laser.Controller = Laser.Controller(self._laser_model)
+        self._laser_model: Laser.Model = None
+        self._laser_controller: Laser.Controller = None
+        self._laser_window: Laser.View =None
 
-        self._laser_window: Laser.View = Laser.View(self._laser_model, self._laser_controller)
 
-        self._prober_model: Prober.Model = Prober.Model(self.config)
-        self._prober_controller: Prober.Controller = Prober.Controller(self._prober_model)
-        self._prober_window: Prober.ControlWindow = Prober.ControlWindow(self._prober_model, self._prober_controller)
+        self._prober_model: Prober.Model = None
+        self._prober_controller: Prober.Controller =None
+        self._prober_window: Prober.ControlWindow = None
 
         # Widgets
         self.mea_eval_tool_model: met.Model = met.Model()

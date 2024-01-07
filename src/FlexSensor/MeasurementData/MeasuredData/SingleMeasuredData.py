@@ -655,7 +655,7 @@ if __name__ == "__main__":
     app = QApplication()
 
     # Load a mat file from E:\03_Simulations\03_Simulations\measurements\Ary1 using scipy
-    setup_logging()
+    #setup_logging()
     # filename = r"E:\03_Simulations\03_Simulations\measurements\Ary1\Ary1_2021-03-10_15-00-00.mat"
     data1 = SingleMeasuredData.from_mat(
         r"support/measurement_die_22_struct_mzi2_2_20220306_1908_rep_11.mat"

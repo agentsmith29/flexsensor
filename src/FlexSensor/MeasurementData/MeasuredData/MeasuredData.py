@@ -49,7 +49,7 @@ class MeasuredData:
 
         # ==============================================================================================================
         # COnnect the signals
-        self._measurement_properties.find_peaks.properties_changed.connect(self.find_peaks)
+        self.measurement_properties.find_peaks.properties_changed.connect(self.find_peaks)
 
     # ==================================================================================================================
     #

@@ -12066,7 +12066,8 @@ class MessageServerInterface(object):
         }
 
     def __init__(self):
-        print ("MessageServerInterface: initializing")
+        pass
+        #print("MessageServerInterface: initializing")
 
     def __enter__(self):
         #-uc-# print ("MessageServerInterface: entering")

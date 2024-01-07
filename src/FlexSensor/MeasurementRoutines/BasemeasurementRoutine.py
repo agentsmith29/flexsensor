@@ -11,20 +11,21 @@ import CaptDeviceControl as CaptDevice
 import LaserControl as Laser
 import confighandler as Config
 
+from FlexSensor.FSBase import FSBase
 from FlexSensor.FlexSensorConfig import FlexSensorConfig
 from FlexSensor.Prober.controller.ProberController import ProberController
 from FlexSensor.MeasurementRoutines.WorkerSignals import WorkerSignals
 
 
-class BaseMeasurementRoutine(QObject):
+class BaseMeasurementRoutine(QObject, FSBase):
 
-    def __init__(self, laser: Laser, ad2device: CaptDevice, prober: ProberController, config: FlexSensorConfig):
+    def __init__(self, laser: Laser.Controller, ad2device: CaptDevice.Controller, prober: ProberController, config: FlexSensorConfig):
         super().__init__()
-        self.logger = logging.getLogger("Base Measurement Routine")
+        self.logger = self.create_new_logger(self.name)
         self.config = config
 
-        self.ad2device: CaptDevice = ad2device
-        self.laser: Laser = laser
+        self.ad2device: CaptDevice.Controller = ad2device
+        self.laser: Laser.Controller = laser
         self.prober: ProberController = prober
         self.logger.debug(f"{self.prober.report_kernel_version()}")
         print(self.prober)

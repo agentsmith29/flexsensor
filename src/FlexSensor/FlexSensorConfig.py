@@ -4,6 +4,7 @@ Author(s): Christoph Schmidt <christoph.schmidt@tugraz.at>
 Created: 2023-10-19 12:35
 Package Version:
 """
+import logging
 from pathlib import Path
 
 import confighandler as cfg
@@ -25,6 +26,9 @@ class FlexSensorConfig(cfg.ConfigNode):
 
         self.output_directory = cfg.Field(Path("./"), friendly_name="Output Directory",
                                      description="Measurement output directory")
+
+        self.log_file = cfg.Field("fs.log", friendly_name="Log File",
+                                          description="")
 
         self.wafer_config = WaferConfig()
         self.app_config = AppSettings()

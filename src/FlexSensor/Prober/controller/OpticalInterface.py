@@ -5,25 +5,18 @@ from Prober.model.OpticalInterfaceStoredData import OpticalInterfaceStoredData
 from constants.FlexsensorConstants import Probe
 from generics.generics import pch
 
+from FlexSensor.FSBase import FSBase
 
 
+class OpticalInterface(FSBase):
 
-
-
-
-
-
-
-
-
-
-class OpticalInterface(object):
-
-    def __init__(self, prober_signals, msg_server):
+    def __init__(self, prober_signals, msg_server,
+                 enable_log=True, log_level=logging.DEBUG, log_file=None):
+        super().__init__()
         self.stored = OpticalInterfaceStoredData()
         self.signals = prober_signals
         self.msg_server = msg_server
-        self.logger = logging.getLogger("Optical Interface")
+        self.logger = self.create_new_logger(self.name, enabled=enable_log, level=log_level)
         self.logger.info("Optical Interface initialized")
 
     # ==================================================================================================================

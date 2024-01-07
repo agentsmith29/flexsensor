@@ -124,7 +124,7 @@ class MultiMeasuredData(MeasuredData):
 
 
 if __name__ == "__main__":
-    setup_logging()
+    #setup_logging()
 
     mypath = 'E:\measurements_06032022\measurements_06032022\mea_mzi2_2_2022_03_06\T40741W177G0\MaskARY1_Jakob\measurement_small'
     mm_data = MeasurementDataLoader.from_folder(mypath)
