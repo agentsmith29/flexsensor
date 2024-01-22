@@ -6,14 +6,14 @@ pyqtgraph
 pandas
 
 # Custom added packages
-git+https://gitlab.tugraz.at/flexsensor-public/modules/confighandler.git@develop
-git+https://gitlab.tugraz.at/flexsensor-public/modules/fswidgets.git@develop
-git+https://gitlab.tugraz.at/flexsensor-public/captdevicecontrol.git@develop
-git+https://gitlab.tugraz.at/flexsensor-public/lasercontrol.git@develop
-#git+https://gitlab.tugraz.at/flexsensor-public/mcpy.git@develop
+git+https://gitlab.tugraz.at/flexsensor-public/modules/confighandler.git@main
+git+https://gitlab.tugraz.at/flexsensor-public/modules/fswidgets.git@main
+git+https://gitlab.tugraz.at/flexsensor-public/captdevicecontrol.git@main
+git+https://gitlab.tugraz.at/flexsensor-public/lasercontrol.git@main
+git+https://gitlab.tugraz.at/flexsensor-public/mcpy.git@main
 
 #../tools/confighandler
 #../captdevicecontrol
 #../lasercontrol
-../mcpy
+#../mcpy
 #../tools/fswidgets

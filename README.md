@@ -1,10 +1,7 @@
-## Still under construction
-![](https://upload.wikimedia.org/wikipedia/commons/f/f0/Baustelle-mittel.png)
-
-*This repository is under construction*. It will be restructured after all individual parts are updated. 
-You can find the dependencies in the gitlab parent folder of this repo.
 
 # Flexsensor
+
+
 
 
 An automation software for [FormFactor Cascade Summit200](https://www.formfactor.com/product/probe-systems/200-mm-systems/summit200/) Probe Stations.
@@ -12,15 +9,18 @@ An automation software for [FormFactor Cascade Summit200](https://www.formfactor
 
 *FlexSensor* is a standalone Python application. Its versatility allows for immediate deployment, without prior programming knowledge. Particularly noteworthy are its post-processing capabilities, however, the software's core functionality is the use of the automated measurement routine to acquire the resonant spectra of photonic devices, integrated within a specialized measurement system, as detailed in Section 
 
+## Still under construction*
+This repository is under construction. The software is ready for deplyoment but is still in beta. 
+If you find any bugs or have any suggestions, please open an issue.
+
+![](https://upload.wikimedia.org/wikipedia/commons/f/f0/Baustelle-mittel.png)
+
 # Installation
-Create a virtual environment (highly recommended)
+Create a virtual environment (highly recommended) and install the dependencies.
 ```python
 python -m venv .venv
 source .venv/Scripts/Activate
-```
-Prior to using the software, these packages need to be installed.
-```
-pip install rich PySide6 pyyaml matplotlib pyqtgraph pandas scipy numpy
+pip install -r requirements.txt
 ```
 
 # Measuring using Flexsensor
