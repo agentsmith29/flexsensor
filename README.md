@@ -16,11 +16,23 @@ If you find any bugs or have any suggestions, please open an issue.
 ![](https://upload.wikimedia.org/wikipedia/commons/f/f0/Baustelle-mittel.png)
 
 # Installation
+## Get the source files
+Clone the repository to your local machine.
+```bash
+git clone git@gitlab.tugraz.at:flexsensor-public/flexsensor.git
+```
+
 Create a virtual environment (highly recommended) and install the dependencies.
 ```python
-python -m venv .venv
-source .venv/Scripts/Activate
+python -m venv .venv;
+source .venv/Scripts/Activate;
 pip install -r requirements.txt
+```
+
+# Starting the software
+To start the software, simply run the `examples/main.py` file. 
+```python
+python main.py
 ```
 
 # Measuring using Flexsensor
