@@ -4,6 +4,8 @@ import Prober as Prober
 from InitialSetupWizard.pages.ForthPage import ForthWizardPage
 from InitialSetupWizard.pages.WizardPage import WizardPage
 
+import FlexSensor.Prober.controller.OpticalInterface
+
 
 class FifthWizardPage(WizardPage):
     def __init__(self, prober: Prober.Controller, page_input_distance: ForthWizardPage, parent: QWizard = None):
@@ -59,15 +61,15 @@ class FifthWizardPage(WizardPage):
 
     def train(self, distance, safe_move_distance):
         # First read out both positions
-        x_in, y_in, z_in, _, _, _ = self.prober.opt_if.set_optical_probe_home(probe=Prober.Probe.INPUT)
-        x_out, y_out, z_out, _, _, _ = self.prober.opt_if.set_optical_probe_home(probe=Prober.Probe.OUTPUT)
+        x_in, y_in, z_in, _, _, _ = self.prober.opt_if.set_optical_probe_home(probe=FlexSensor.Prober.controller.OpticalInterface.Probe.INPUT)
+        x_out, y_out, z_out, _, _, _ = self.prober.opt_if.set_optical_probe_home(probe=FlexSensor.Prober.controller.OpticalInterface.Probe.OUTPUT)
         pos = Prober.ProbePosition(input=(x_in, y_in, z_in), output=(x_out, y_out, z_out))
         print(pos)
         # Now move the input probe away from the position
 
         # INPUT -safe_move_distance #===================================================================================
         self.logger.info(f"Moving input probe {-safe_move_distance}um.")
-        self.prober.opt_if.move_optical_probe(Prober.Probe.INPUT, -safe_move_distance, '0', 'R')
+        self.prober.opt_if.move_optical_probe(FlexSensor.Prober.controller.OpticalInterface.Probe.INPUT, -safe_move_distance, '0', 'R')
         self.logger.info(f"Moved input probe {-safe_move_distance}um.")
         # ==============================================================================================================
 
@@ -78,7 +80,7 @@ class FifthWizardPage(WizardPage):
                      f"Make sure that the output probe has been moved!",
                 title="Optical output probe are about to move",
         ):
-            self.prober.opt_if.move_optical_probe(Prober.Probe.OUTPUT, -distance, '0', 'R')
+            self.prober.opt_if.move_optical_probe(FlexSensor.Prober.controller.OpticalInterface.Probe.OUTPUT, -distance, '0', 'R')
             self.logger.info(f"Moved output probe {-distance}um.")
         else:
             self.display_mbox_error(text="The movement has been aborted by the user.", title="Movement Aborted.")
@@ -86,13 +88,13 @@ class FifthWizardPage(WizardPage):
         # ==============================================================================================================
 
         # ==============================================================================================================
-        self.prober.opt_if.set_optical_probe_home(Prober.Probe.OUTPUT)
+        self.prober.opt_if.set_optical_probe_home(FlexSensor.Prober.controller.OpticalInterface.Probe.OUTPUT)
         self.logger.info(f"Set optical output home to current position")
         # ==============================================================================================================
 
         # OUTPUT distance ==============================================================================================
         self.logger.info(f"Moving output probe {distance}um back to initial position ")
-        self.prober.opt_if.move_optical_probe(Prober.Probe.OUTPUT, distance, '0', 'R')
+        self.prober.opt_if.move_optical_probe(FlexSensor.Prober.controller.OpticalInterface.Probe.OUTPUT, distance, '0', 'R')
         # ==============================================================================================================
 
         # INPUT safe_move_distance =====================================================================================
@@ -102,7 +104,7 @@ class FifthWizardPage(WizardPage):
                      f"Make sure that the output probe position has been reset!",
                 title="Optical output probe are about to move"
         ):
-            self.prober.opt_if.move_optical_probe(Prober.Probe.INPUT, safe_move_distance, '0', 'R')
+            self.prober.opt_if.move_optical_probe(FlexSensor.Prober.controller.OpticalInterface.Probe.INPUT, safe_move_distance, '0', 'R')
             self.logger.info(f"Moved input probe {safe_move_distance}.")
         else:
             self.display_mbox_error(text="The movement has been aborted by the user.", title="Movement Aborted.")

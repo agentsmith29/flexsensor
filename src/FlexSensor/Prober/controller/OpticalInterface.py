@@ -2,8 +2,8 @@ import logging
 
 from Prober.model.OpticalInterfaceModel import OpticalInterfaceModel
 from Prober.model.OpticalInterfaceStoredData import OpticalInterfaceStoredData
-from constants.FlexsensorConstants import Probe
-from generics.generics import pch
+#from constants.FlexsensorConstants import Probe
+#from generics.generics import pch
 
 from FlexSensor.FSBase import FSBase
 
@@ -22,6 +22,8 @@ class OpticalInterface(FSBase):
     # ==================================================================================================================
     # pythonized api calls
     # ==================================================================================================================
+    def pch(self, c, num):
+        return ''.join([str(c) for i in range(0, num)])
 
     def enable_flight_height_control(self, enable_in=True, enable_out=True):
         # Disable Flight Height Control
@@ -189,7 +191,7 @@ class OpticalInterface(FSBase):
             output_power)
 
     def search_for_light(self, threshold: float = -70, threshold_areascan: float = -60, retries: float = 3):
-        self.logger.debug(f"[OptIF  Task] - {pch('*', 20)} Search for light {pch('*', 20)}")
+        self.logger.debug(f"[OptIF  Task] - {self.pch('*', 20)} Search for light {self.pch('*', 20)}")
         self.signals.log_debug.emit("OptIF  Task", f"*** Search for light ***", None)
 
         # Recenter the probes, perform an area scan, recenter again.
@@ -221,7 +223,7 @@ class OpticalInterface(FSBase):
             x_1, x_2, y_1, y_2, input_power, output_power = self._recenter_and_scan()
             retries -= 1
 
-        self.logger.debug(f"[OptIF  Task] - {pch('*', 20)} Search for light completed {pch('*', 20)}")
+        self.logger.debug(f"[OptIF  Task] - {self.pch('*', 20)} Search for light completed {self.pch('*', 20)}")
         self.signals.log_debug.emit("OptIF  Task", f"*** Search for light completed***", None)
         return input_power, output_power
 
@@ -268,3 +270,7 @@ class OpticalInterface(FSBase):
     # Store and load functions
     # ==================================================================================================================
 
+
+class Probe:
+    INPUT = 0
+    OUTPUT = 1

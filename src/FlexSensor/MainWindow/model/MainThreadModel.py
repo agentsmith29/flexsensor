@@ -9,8 +9,9 @@ import confighandler as Config
 
 import MeasurementEvaluationTool as met
 # import ConfigHandler as Config
-from MeasurementRoutines.MeasurementRoutine import MeasurementRoutine
+#from MeasurementRoutines.MeasurementRoutine import MeasurementRoutine
 from FlexSensor.FlexSensorConfig import FlexSensorConfig
+from FlexSensor.MeasurementRoutines.BaseMeasurementRoutine import BaseMeasurementRoutine
 
 
 class MainThreadSignals(QObject):
@@ -20,7 +21,7 @@ class MainThreadSignals(QObject):
     ad2_changed = Signal(AD2Dev.Model, AD2Dev.Controller, AD2Dev.View)
     prober_changed = Signal(Prober.Model, Prober.Controller, Prober.ControlWindow)
 
-    measurement_routine_changed = Signal(MeasurementRoutine)
+    measurement_routine_changed = Signal(BaseMeasurementRoutine)
 
 
 class MainThreadModel(QObject):
@@ -32,7 +33,7 @@ class MainThreadModel(QObject):
 
         self._config: FlexSensorConfig = config
 
-        self._measurement_routine: MeasurementRoutine = None
+        self._measurement_routine: BaseMeasurementRoutine = None
 
         self.start_capture_flag: Value = Value('i', 0)
         self._ad2_model: AD2Dev.Model = None
@@ -146,10 +147,10 @@ class MainThreadModel(QObject):
         self.signals.prober_changed.emit(self.prober_model, self.prober_controller, self.prober_window)
 
     @property
-    def measurement_routine(self) -> MeasurementRoutine:
+    def measurement_routine(self) -> BaseMeasurementRoutine:
         return self._measurement_routine
 
     @measurement_routine.setter
-    def measurement_routine(self, value: MeasurementRoutine):
+    def measurement_routine(self, value: BaseMeasurementRoutine):
         self._measurement_routine = value
         self.signals.measurement_routine_changed.emit(self.measurement_routine)

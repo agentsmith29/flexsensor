@@ -7,7 +7,7 @@ from PySide6.QtGui import QIcon
 import FlexSensor.Prober as Prober
 
 from FlexSensor.Prober.controller.ProberController import ProberController
-from FlexSensor.constants.FlexsensorConstants import Probe
+from FlexSensor.Prober.controller.OpticalInterface import Probe
 
 
 class StepThroughView(QMainWindow):

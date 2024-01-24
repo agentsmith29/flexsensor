@@ -4,7 +4,7 @@ from PySide6.QtCore import Signal
 import mcpy
 from mcpy import Uncertainty, MCSamples
 
-from MeasurementData.Properties.GenericProperties import GenericProperties
+from FlexSensor.generics.GenericProperties import GenericProperties
 
 
 class MPropertiesFindPeaks(GenericProperties):

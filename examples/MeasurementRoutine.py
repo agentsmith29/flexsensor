@@ -1,4 +1,5 @@
 import logging
+import sys
 import time
 import traceback
 from datetime import datetime
@@ -8,31 +9,41 @@ import LaserControl as Laser
 import mcpy
 import pandas as pd
 from PySide6.QtCore import Slot
-from constants.FlexsensorConstants import Probe
-from generics.generics import pch
 
-import FlexSensor.Prober as Prober
-from FlexSensor.FlexSensorConfig import FlexSensorConfig
+import FlexSensor as fs
+from FlexSensor import Prober
+
 from FlexSensor.MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
-from FlexSensor.MeasurementData.Properties.AD2CaptDeviceProperties import AD2CaptDeviceProperties
-from FlexSensor.MeasurementData.Properties.LaserProperties import LaserProperties
-from FlexSensor.MeasurementData.Properties.MeasurementProperties import MPropertiesFindPeaks, \
-    MeasurementProperties, WaveguidePropertiesMZI
-from FlexSensor.MeasurementData.Properties.WaferProperties import WaferProperties
-from FlexSensor.MeasurementRoutines.BasemeasurementRoutine import BaseMeasurementRoutine
-from FlexSensor.generics.VASInputFileParser import VASInputFileParser, Structure
+from FlexSensor.Prober.controller.OpticalInterface import Probe
+from Properties import AD2CaptDeviceProperties
+from Properties import LaserProperties
+from Properties.MeasurementProperties import WaveguidePropertiesMZI, MeasurementProperties, \
+    MPropertiesFindPeaks
+from Properties.WaferProperties import WaferProperties
+
+sys.path.append('./src')
+
+# from FlexSensor.FlexSensorConfig import FlexSensorConfig
+# from FlexSensor.MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
+# from FlexSensor.MeasurementData.Properties.AD2CaptDeviceProperties import AD2CaptDeviceProperties
+# from FlexSensor.MeasurementData.Properties.LaserProperties import LaserProperties
+# from FlexSensor.MeasurementData.Properties.MeasurementProperties import MPropertiesFindPeaks, \
+#     MeasurementProperties, WaveguidePropertiesMZI
+# from FlexSensor.MeasurementData.Properties.WaferProperties import WaferProperties
+# from FlexSensor.MeasurementRoutines.BasemeasurementRoutine import BaseMeasurementRoutine
+# from FlexSensor.generics.VASInputFileParser import VASInputFileParser, Structure
 
 
-class MeasurementRoutine(BaseMeasurementRoutine):
+class MeasurementRoutine(fs.BaseMeasurementRoutine):
 
     def __init__(self, laser: Laser, ad2device: AD2Dev, prober: Prober.Controller,
-                 config: FlexSensorConfig):
+                 config: fs.FlexSensorConfig):
         super().__init__(laser, ad2device, prober, config)
 
         self.logger = logging.getLogger("Measurement Routine")
         # The signals for connecting to the UI
 
-        self.parsed_file = VASInputFileParser()
+        self.parsed_file = fs.VASInputFileParser()
 
         selected_file, self.grouped_structures, self.bookmarks = self.parsed_file.read_file(
             input_file=self.config.wafer_config.structure_file.get()
@@ -92,7 +103,7 @@ class MeasurementRoutine(BaseMeasurementRoutine):
             # self._init_ad2device_signals()
 
             self._write_info(
-                f"{pch('=', 50)} Starting measurement {pch('=', 50)}")
+                f"{self.pch('=', 50)} Starting measurement {self.pch('=', 50)}")
 
             # === Check contact height
             print(self.prober)
@@ -139,7 +150,7 @@ class MeasurementRoutine(BaseMeasurementRoutine):
     # If implementing multiple routines, and the steps may occure multiple times, move them to
     # the base class instead of reimplementing/copying!
     # ==================================================================================================================
-    def _step_place_input_probe(self, structure: Structure, fmt):
+    def _step_place_input_probe(self, structure: fs.Structure, fmt):
         """
             Places the chuck, thus the input probe, such that the probe is on the correct position.
             Move the chuck to the given position. Since the input probe stays on the same position,
@@ -296,11 +307,11 @@ class MeasurementRoutine(BaseMeasurementRoutine):
             raise e
 
     # Routine for measuring one structure
-    def _measure_structure(self, die_no: int, structure: Structure, structure_idx: int):
+    def _measure_structure(self, die_no: int, structure: fs.Structure, structure_idx: int):
         """Routine for measuring one structure
 
         """
-        self.structure: Structure = structure
+        self.structure: fs.Structure = structure
         self.formatter = f"[Measurement. Die {die_no}]: {self.structure.name} |"
         timestamp = datetime.now().strftime('%d/%m/%Y %H:%M:%S.%f')
 

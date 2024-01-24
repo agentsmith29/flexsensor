@@ -1,6 +1,6 @@
 import pandas as pd
 
-from MeasurementData.Properties.GenericProperties import GenericProperties
+from FlexSensor.generics.GenericProperties import GenericProperties
 
 
 class AD2CaptDeviceProperties(GenericProperties):

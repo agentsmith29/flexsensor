@@ -8,20 +8,24 @@ import pandas as pd
 import scipy
 from numpy import ndarray
 
-from MeasurementData.Properties.AD2CaptDeviceProperties import AD2CaptDeviceProperties
-from MeasurementData.Properties.LaserProperties import LaserProperties
-from MeasurementData.MeasuredData.SupportClasses.MeasurementDataTables import MeasurementDataTables
-from MeasurementData.Properties.MeasurementProperties import MeasurementProperties, \
-    MPropertiesFindPeaks, WaveguideProperties
-from MeasurementData.Properties.WaferProperties import WaferProperties
+from FlexSensor.MeasurementData.MeasuredData.SupportClasses.MeasurementDataTables import MeasurementDataTables
+from FlexSensor.generics.GenericProperties import GenericProperties
+
+
+#from MeasurementData.Properties.AD2CaptDeviceProperties import AD2CaptDeviceProperties
+#from MeasurementData.Properties.LaserProperties import LaserProperties
+#from MeasurementData.MeasuredData.SupportClasses.MeasurementDataTables import MeasurementDataTables
+#from MeasurementData.Properties.MeasurementProperties import MeasurementProperties, \
+#    MPropertiesFindPeaks, WaveguideProperties
+#from MeasurementData.Properties.WaferProperties import WaferProperties
 
 
 class MeasuredData:
 
 
-    def __init__(self, laser_properties: LaserProperties, ad2_properties: AD2CaptDeviceProperties,
-                 wafer_properties: WaferProperties, waveguide_properties: WaveguideProperties,
-                 measurement_properties: MeasurementProperties):
+    def __init__(self, laser_properties: GenericProperties, ad2_properties: GenericProperties,
+                 wafer_properties: GenericProperties, waveguide_properties: GenericProperties,
+                 measurement_properties: GenericProperties):
         #super().__init__()
         self.logger = logging.getLogger("MeasuredSignal")
         # ==============================================================================================================

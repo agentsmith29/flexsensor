@@ -1,4 +1,13 @@
 import sys
+
+from FlexSensor.MeasurementData.MeasuredData.MeasuredData import MeasuredData
+from FlexSensor.generics.GenericProperties import GenericProperties
+
+#from examples.Properties.AD2CaptDeviceProperties import AD2CaptDeviceProperties
+#from examples.Properties.LaserProperties import LaserProperties
+#from examples.Properties.MeasurementProperties import WaveguideProperties, MeasurementProperties
+#from examples.Properties.WaferProperties import WaferProperties
+
 sys.path.append("../flexsensorpy")
 sys.path.append("../mcpy")
 import pathlib
@@ -19,16 +28,6 @@ from scipy.io import matlab
 from scipy.signal import find_peaks
 import scipy
 
-from MeasurementData.Properties.AD2CaptDeviceProperties import AD2CaptDeviceProperties
-
-from MeasurementData.Properties.LaserProperties import LaserProperties
-from MeasurementData.MeasuredData.MeasuredData import MeasuredData
-from MeasurementData.Properties.MeasurementProperties import (WaveguideProperties,
-                                                              MeasurementProperties,
-                                                              WaveguidePropertiesMZI,
-                                                              MPropertiesFindPeaks)
-from MeasurementData.Properties.WaferProperties import WaferProperties
-
 import mcpy
 
 
@@ -39,112 +38,113 @@ class SingleMeasuredData(MeasuredData):
     # ==================================================================================================================
     # Load a Measurement data from a matlab mat-file
     # ==================================================================================================================
-    @classmethod
-    def from_mat(cls, mat_file: Path | str) -> 'SingleMeasuredData':
-        """
-        This allows to open "old" mat files, that do not have some data.
-        """
-        mat_file = pathlib.Path(mat_file)
-        logging.info(f"Loading {mat_file.name}")
-        matf = scipy.io.loadmat(mat_file)
-
-        inst = cls(
-            laser_properties=LaserProperties(
-                mcpy.Rectangular(2, 0.01, unit='nm/s'),
-                mcpy.Rectangular(2, 0.01, unit='nm/s'),
-                mcpy.Rectangular(0.5, 0.01, unit='nm/s^2'),
-                (mcpy.Rectangular(835, 0.01, unit='nm'), mcpy.Rectangular(870, 0.01, unit='nm'))
-            ),
-            ad2_properties=AD2CaptDeviceProperties(
-                0, 0, matf['ad2_sample_rate'], matf['ad2_total_samples'], matf['measure_time']
-            ),
-            wafer_properties=WaferProperties(
-                matf['wafer_nr'],
-                matf['structure_name'],
-                matf['die_nr'],
-                matf['chuck_col'],
-                matf['chuck_row'],
-                (int(matf['structure_x_in']), int(matf['structure_y_in'])),
-                (int(matf['structure_x_out']), int(matf['structure_y_out'])),
-                int(mat_file.name.split('_')[9].replace('.mat', ''))
-            ),
-            waveguide_properties=WaveguidePropertiesMZI(
-                length1=mcpy.Rectangular(10e6, 20, unit='nm'),
-                length2=mcpy.Rectangular(10.38e6, 20, unit='nm'),
-                width=mcpy.Rectangular(550, 20, unit='nm'),
-                height=mcpy.Rectangular(625, 2.405, unit='nm')),
-            measurement_properties=MeasurementProperties(
-                MPropertiesFindPeaks(0.1, 10000, None)
-            ),
-            timestamp=matf['timestamp'],
-            measurement_file=None,
-            measurement_data=matf['amplitude'][0]
-        )
-        """
-        date_format = '%a %b %d %H:%M:%S %Y'
-        x = datetime. strptime(
-        re.search('(?<=Created on: ).*', matf['__header__'].decode('UTF-8')).group(0),
-        date_format)"""
-
-        return inst
-
-    @classmethod
-    def from_mat_v2(cls, mat_file: Path | str):
-        def loadmat(filename):
-            '''
-            this function should be called instead of direct spio.loadmat
-            as it cures the problem of not properly recovering python dictionaries
-            from mat files. It calls the function check keys to cure all entries
-            which are still mat-objects
-            '''
-            data = scipy.io.loadmat(filename, struct_as_record=False, squeeze_me=True)
-            return _check_keys(data)
-
-        def _check_keys(dict):
-            '''
-            checks if entries in dictionary are mat-objects. If yes
-            todict is called to change them to nested dictionaries
-            '''
-            for key in dict:
-                if isinstance(dict[key], matlab.mio5_params.mat_struct):
-                    dict[key] = _todict(dict[key])
-            return dict
-
-        def _todict(matobj):
-            '''
-            A recursive function which constructs from matobjects nested dictionaries
-            '''
-            dict = {}
-            for strg in matobj._fieldnames:
-                elem = matobj.__dict__[strg]
-                if isinstance(elem, matlab.mio5_params.mat_struct):
-                    dict[strg] = _todict(elem)
-                else:
-                    dict[strg] = elem
-            return dict
-
-        if isinstance(mat_file, str):
-            mat_file = Path(mat_file)
-
-        logging.info(f"Loading {mat_file.name}")
-        matf = loadmat(mat_file)
-        # mcpy.Uncertainty.from_tuple(matf['laser_properties']['laser_wavelength'])
-        inst = cls(
-            laser_properties=LaserProperties.from_dict(matf['laser_properties']),
-            ad2_properties=AD2CaptDeviceProperties.from_dict(matf['ad2_properties']),
-            wafer_properties=WaferProperties.from_dict(matf['wafer_properties']),
-            waveguide_properties=WaveguidePropertiesMZI.from_dict(matf['waveguide_properties']),
-            measurement_properties=MeasurementProperties.from_dict(matf['measurement_properties']),
-            timestamp=matf['timestamp'],
-            measurement_data=pd.DataFrame({
-                            'wavelength': matf['wavelength'],
-                            'amplitude': matf['amplitude'],
-                            'amplitude_detrended': matf['amplitude_detrended']}),
-
-            #measurement_file=Path(f"{mat_file.absolute().parent}/{matf['measurement_file']}").absolute()
-        )
-        return inst
-
+    # @classmethod
+    # def from_mat(cls, mat_file: Path | str) -> 'SingleMeasuredData':
+    #     """
+    #     This allows to open "old" mat files, that do not have some data.
+    #     """
+    #     mat_file = pathlib.Path(mat_file)
+    #     logging.info(f"Loading {mat_file.name}")
+    #     matf = scipy.io.loadmat(mat_file)
+    #
+    #     inst = cls(
+    #         laser_properties=
+    #         #LaserProperties(
+    #         #    mcpy.Rectangular(2, 0.01, unit='nm/s'),
+    #         #   mcpy.Rectangular(2, 0.01, unit='nm/s'),
+    #         #    mcpy.Rectangular(0.5, 0.01, unit='nm/s^2'),
+    #         #    (mcpy.Rectangular(835, 0.01, unit='nm'), mcpy.Rectangular(870, 0.01, unit='nm'))
+    #         #),
+    #         ad2_properties=AD2CaptDeviceProperties(
+    #             0, 0, matf['ad2_sample_rate'], matf['ad2_total_samples'], matf['measure_time']
+    #         ),
+    #         wafer_properties=WaferProperties(
+    #             matf['wafer_nr'],
+    #             matf['structure_name'],
+    #             matf['die_nr'],
+    #             matf['chuck_col'],
+    #             matf['chuck_row'],
+    #             (int(matf['structure_x_in']), int(matf['structure_y_in'])),
+    #             (int(matf['structure_x_out']), int(matf['structure_y_out'])),
+    #             int(mat_file.name.split('_')[9].replace('.mat', ''))
+    #         ),
+    #         waveguide_properties=WaveguidePropertiesMZI(
+    #             length1=mcpy.Rectangular(10e6, 20, unit='nm'),
+    #             length2=mcpy.Rectangular(10.38e6, 20, unit='nm'),
+    #             width=mcpy.Rectangular(550, 20, unit='nm'),
+    #             height=mcpy.Rectangular(625, 2.405, unit='nm')),
+    #         measurement_properties=MeasurementProperties(
+    #             MPropertiesFindPeaks(0.1, 10000, None)
+    #         ),
+    #         timestamp=matf['timestamp'],
+    #         measurement_file=None,
+    #         measurement_data=matf['amplitude'][0]
+    #     )
+    #     """
+    #     date_format = '%a %b %d %H:%M:%S %Y'
+    #     x = datetime. strptime(
+    #     re.search('(?<=Created on: ).*', matf['__header__'].decode('UTF-8')).group(0),
+    #     date_format)"""
+    #
+    #     return inst
+    #
+    # @classmethod
+    # def from_mat_v2(cls, mat_file: Path | str):
+    #     def loadmat(filename):
+    #         '''
+    #         this function should be called instead of direct spio.loadmat
+    #         as it cures the problem of not properly recovering python dictionaries
+    #         from mat files. It calls the function check keys to cure all entries
+    #         which are still mat-objects
+    #         '''
+    #         data = scipy.io.loadmat(filename, struct_as_record=False, squeeze_me=True)
+    #         return _check_keys(data)
+    #
+    #     def _check_keys(dict):
+    #         '''
+    #         checks if entries in dictionary are mat-objects. If yes
+    #         todict is called to change them to nested dictionaries
+    #         '''
+    #         for key in dict:
+    #             if isinstance(dict[key], matlab.mio5_params.mat_struct):
+    #                 dict[key] = _todict(dict[key])
+    #         return dict
+    #
+    #     def _todict(matobj):
+    #         '''
+    #         A recursive function which constructs from matobjects nested dictionaries
+    #         '''
+    #         dict = {}
+    #         for strg in matobj._fieldnames:
+    #             elem = matobj.__dict__[strg]
+    #             if isinstance(elem, matlab.mio5_params.mat_struct):
+    #                 dict[strg] = _todict(elem)
+    #             else:
+    #                 dict[strg] = elem
+    #         return dict
+    #
+    #     if isinstance(mat_file, str):
+    #         mat_file = Path(mat_file)
+    #
+    #     logging.info(f"Loading {mat_file.name}")
+    #     matf = loadmat(mat_file)
+    #     # mcpy.Uncertainty.from_tuple(matf['laser_properties']['laser_wavelength'])
+    #     inst = cls(
+    #         laser_properties=LaserProperties.from_dict(matf['laser_properties']),
+    #         ad2_properties=AD2CaptDeviceProperties.from_dict(matf['ad2_properties']),
+    #         wafer_properties=WaferProperties.from_dict(matf['wafer_properties']),
+    #         waveguide_properties=WaveguidePropertiesMZI.from_dict(matf['waveguide_properties']),
+    #         measurement_properties=MeasurementProperties.from_dict(matf['measurement_properties']),
+    #         timestamp=matf['timestamp'],
+    #         measurement_data=pd.DataFrame({
+    #                         'wavelength': matf['wavelength'],
+    #                         'amplitude': matf['amplitude'],
+    #                         'amplitude_detrended': matf['amplitude_detrended']}),
+    #
+    #         #measurement_file=Path(f"{mat_file.absolute().parent}/{matf['measurement_file']}").absolute()
+    #     )
+    #     return inst
+    #
     @staticmethod
     def convert(mat_file):
         """Reads the mat file and converts the new format to the old format"""
@@ -157,11 +157,11 @@ class SingleMeasuredData(MeasuredData):
 
 
     def __init__(self,
-                 laser_properties: LaserProperties,
-                 ad2_properties: AD2CaptDeviceProperties,
-                 wafer_properties: WaferProperties,
-                 waveguide_properties: WaveguideProperties,
-                 measurement_properties: MeasurementProperties,
+                 laser_properties: GenericProperties,
+                 ad2_properties: GenericProperties,
+                 wafer_properties: GenericProperties,
+                 waveguide_properties: GenericProperties,
+                 measurement_properties: GenericProperties,
                  timestamp: datetime,
                  measurement_file: Path | str = None,
                  measurement_data = None,

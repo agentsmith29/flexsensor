@@ -4,14 +4,14 @@ import confighandler as Config
 #from ConfigHandler.controller.VAutomatorConfig import VAutomatorConfig
 import FlexSensor.Prober as Prober
 from FlexSensor.FSBase import FSBase
-from FlexSensor.Prober.controller.OpticalInterface import OpticalInterface
-from FlexSensor.Prober.model.ProberModel import ProberModel
-from FlexSensor.constants.FlexsensorConstants import Probe
+from FlexSensor.Prober.controller import OpticalInterface
+#from FlexSensor.Prober.controller.OpticalInterface import OpticalInterface, Probe
+#from FlexSensor.Prober.model.ProberModel import ProberModel
 from FlexSensor.generics.generics import pch
 
 
 class ProberController(FSBase):
-    def __init__(self, model: ProberModel,
+    def __init__(self, model: Prober.Model,
                  enable_log=True, log_level=logging.DEBUG, log_file=None,
                  *args, **kwargs):
         super().__init__()
@@ -22,7 +22,7 @@ class ProberController(FSBase):
         self.msg_server = Prober.MessageServerInterface()
 
         # Optical Interface Control hexapods and piezos
-        self.opt_if = OpticalInterface(self.signals, self.msg_server)
+        self.opt_if = Prober.OpticalInterface(self.signals, self.msg_server)
         self.logger.info("Prober initialized")
 
         self.model.version = self.report_kernel_version()
@@ -217,8 +217,8 @@ class ProberController(FSBase):
 
         # Move hexapod and nano to height 50 um
         height = 80
-        self.opt_if.set_probe_height(Probe.INPUT, height)
-        self.opt_if.set_probe_height(Probe.OUTPUT, height)
+        self.opt_if.set_probe_height(OpticalInterface.Probe.INPUT, height)
+        self.opt_if.set_probe_height(OpticalInterface.Probe.OUTPUT, height)
 
         # Read the die data: die number, col, row
         self.model.die, self.model.die_col, self.model.die_row = self.get_die_as_col_row()
@@ -299,7 +299,7 @@ class ProberController(FSBase):
         self.write_log("warning", "No light found.")
         return False
 
-    def store_hexapod_position():
+    def store_hexapod_position(self):
         """
             Stores the hexpods and nanocube position for later retrieval
         """

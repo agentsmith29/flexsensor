@@ -6,12 +6,20 @@ from PySide6.QtWidgets import QGridLayout, QApplication, QMainWindow, QWidget, Q
 
 import confighandler as Config
 
-#from MapFileParser import MapFileParser
 from FlexSensor.Prober.controller.ProberController import ProberController
 from FlexSensor.Prober.model.ProberModel import ProberModel
+#from MapFileParser import MapFileParser
+#from FlexSensor import Prober
 from FlexSensor.Prober.view.widgets.DieGridWidget import DieGridWidget
 from FlexSensor.Prober.view.widgets.ProberPositionWidget import ProberPositionWidget
 from FlexSensor.Prober.view.widgets.ProberStatusWidget import ProberStatusWidget
+
+
+#from FlexSensor.Prober.controller.ProberController import ProberController
+#from FlexSensor.Prober.model.ProberModel import ProberModel
+#from FlexSensor.Prober.view.widgets.DieGridWidget import DieGridWidget
+#from FlexSensor.Prober.view.widgets.ProberPositionWidget import ProberPositionWidget
+#from FlexSensor.Prober.view.widgets.ProberStatusWidget import ProberStatusWidget
 
 
 class ProberControlWindow(QMainWindow):

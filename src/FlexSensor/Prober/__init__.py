@@ -7,9 +7,17 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
 
 from .model.ProberModel import ProberModel as Model
 from .model.ProberModel import ProberSignals as Signals
-from .view.ProberControlWindow import ProberControlWindow as ControlWindow
-from .controller.ProberController import ProberController as Controller
+
 from .controller.OpticalProbesPosition import OpticalProbesPosition as ProbePosition
+from .controller.OpticalInterface import OpticalInterface
+
+
+from .controller.ProberController import ProberController as Controller
+from .view.ProberControlWindow import ProberControlWindow as ControlWindow
+
+
+
+
 
 if os.getenv("VELOX_SIM") == "TRUE":
     try:
@@ -36,3 +44,4 @@ else:
                                                          ReadChuckPosition, ReadChuckHeights, MoveChuck,
                                                          SnapImage, GetDieDataAsColRow, StepToDie,
                                                          ReportKernelVersion)
+

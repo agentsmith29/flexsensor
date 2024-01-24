@@ -2,7 +2,6 @@ from pathlib import Path
 
 from PySide6.QtCore import QObject, Signal
 
-from MeasurementData.Properties.WaferProperties import WaferProperties
 
 from FlexSensor.FlexSensorConfig import FlexSensorConfig
 
@@ -62,12 +61,12 @@ class ProberModel:
 
         #self._wafer_map = self.config.
 
-    @property
-    def laser_properties(self) -> WaferProperties:
-        return WaferProperties(self.acceleration,
-                               self.deceleration,
-                               self.velocity,
-                               (self.sweep_start_wavelength, self.sweep_stop_wavelength))
+    #@property
+    #def laser_properties(self) -> WaferProperties:
+    #    return WaferProperties(self.acceleration,
+    #                           self.deceleration,
+    #                           self.velocity,
+    #                           (self.sweep_start_wavelength, self.sweep_stop_wavelength))
     @property
     def connected(self) -> bool:
         return self._connected

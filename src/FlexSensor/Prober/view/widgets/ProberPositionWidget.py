@@ -1,11 +1,14 @@
 from PySide6.QtWidgets import QWidget, QGroupBox, QGridLayout, QLabel, QProgressBar
 
-from Prober.model.ProberModel import ProberModel
+from FlexSensor import Prober
+
+
+#from Prober.model.ProberModel import ProberModel
 
 
 class ProberPositionWidget(QWidget):
 
-    def __init__(self, model: ProberModel, chuck_position="Vertical"):
+    def __init__(self, model: Prober.Model, chuck_position="Vertical"):
         super().__init__()
         self.model = model
         self.layout = QGridLayout()

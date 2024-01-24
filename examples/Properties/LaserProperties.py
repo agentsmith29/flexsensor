@@ -1,10 +1,11 @@
 import sys
 
-from MeasurementData.Properties.GenericProperties import GenericProperties
 #import mcpy
 
 #sys.path.append('../mcpy/mcpy')
 import mcpy
+
+from FlexSensor.generics.GenericProperties import GenericProperties
 
 
 class LaserProperties(GenericProperties):

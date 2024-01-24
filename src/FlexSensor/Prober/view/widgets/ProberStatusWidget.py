@@ -2,12 +2,15 @@ from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QWidget, QLabel, QGridLayout, QStyle, QFrame, QProgressBar, QGroupBox
 
-from Prober.model.ProberModel import ProberModel
+from FlexSensor import Prober
+
+
+#from Prober.model.ProberModel import ProberModel
 
 
 class ProberStatusWidget(QWidget):
 
-    def __init__(self, model: ProberModel):
+    def __init__(self, model: Prober.Model):
         super().__init__()
         self.setFixedSize(300, 200)
         self.model = model

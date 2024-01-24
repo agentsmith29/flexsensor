@@ -34,6 +34,9 @@ class BaseMeasurementRoutine(QObject, FSBase):
 
         self.signals = WorkerSignals()
 
+    def pch(self, c, num):
+        return ''.join([str(c) for i in range(0, num)])
+
     @Slot()
     def run(self):
         raise NotImplementedError()

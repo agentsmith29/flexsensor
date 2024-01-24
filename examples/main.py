@@ -9,8 +9,13 @@ import sys
 import time
 
 from PySide6.QtWidgets import QApplication
+# set env variable VELOX_SIM=TRUE
+# to use the simulator instead of the real hardware
+import os
+os.environ["VELOX_SIM"] = "TRUE"
 
 sys.path.append('./src')
+from MeasurementRoutine import MeasurementRoutine
 import FlexSensor
 
 def main(argv):
@@ -37,7 +42,7 @@ def main(argv):
     main_model = FlexSensor.MainThreadModel(config=config)
     #wdg = config.view.widget()
     #wdg.show()
-    main_controller = FlexSensor.MainThreadController(main_model)
+    main_controller = FlexSensor.MainThreadController(main_model, MeasurementRoutine)
     main_window = FlexSensor.MainWindow(main_model, main_controller)
 
     # test_win = StructureSelector()

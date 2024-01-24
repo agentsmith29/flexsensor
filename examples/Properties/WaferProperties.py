@@ -1,6 +1,4 @@
-
-
-from MeasurementData.Properties.GenericProperties import GenericProperties
+from FlexSensor.generics.GenericProperties import GenericProperties
 
 
 class WaferProperties(GenericProperties):
