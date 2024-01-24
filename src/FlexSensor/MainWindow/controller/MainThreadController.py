@@ -18,7 +18,6 @@ class MainThreadController(FSBase, object):
     on_start_laser_sweep = Signal(name='on_start_laser_sweep')
 
     def __init__(self, model: MainThreadModel,
-                 measurement_routine: Type[BaseMeasurementRoutine],
                  enable_log: bool = True, log_level: int = logging.DEBUG, log_file: str = "flexsensor.log"):
         super().__init__()
 
@@ -57,7 +56,7 @@ class MainThreadController(FSBase, object):
         self._device_initialization()
 
         # Load the measurement routine
-        self.model.measurement_routine = self._load_measurement_routine(measurement_routine)
+        #self.model.measurement_routine = self._load_measurement_routine(measurement_routine)
 
         # Thread for the measurement routine
         self.measurement_thread = QThread()
@@ -105,7 +104,7 @@ class MainThreadController(FSBase, object):
         self.measurement_thread.started.connect(measurement_routine.run)
         self.logger.debug("Moved worker/measurement routine to thread and connected the signals.")
 
-    def _load_measurement_routine(self, measurement_routine: Type[BaseMeasurementRoutine]) -> BaseMeasurementRoutine:
+    def load_measurement_routine(self, measurement_routine: Type[BaseMeasurementRoutine], *args, **kwargs) -> BaseMeasurementRoutine:
         """
             Loads the measurement routine and initializes it.
 
@@ -115,16 +114,16 @@ class MainThreadController(FSBase, object):
             Raises:
                 Exception: If some or all devices have not been initialized.
         """
-        # if not self.device_are_init:
-        #    raise Exception("Some or all devices have not been initialized. First call `_device_initialization()`!")
-
-        _measurement_routine = measurement_routine(
-            self.model.laser_controller,
-            self.model.ad2_controller,
-            self.model.prober_controller,
-            self.model.config)
+        self.model.measurement_routine = measurement_routine(
+            prober=self.model.prober_controller,
+            config=self.model.config,
+            *args, **kwargs)
+        #   laser=self.model.laser_controller,
+        #    ad2device=self.model.ad2_controller,
+        #    prober=self.model.prober_controller,
+        #    config=self.model.config)
         self.logger.debug("Initialized MeasurementRoutine.")
-        return _measurement_routine
+        #return _measurement_routine
 
     def _device_initialization(self):
         """

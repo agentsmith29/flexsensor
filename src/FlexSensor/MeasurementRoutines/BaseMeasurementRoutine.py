@@ -19,13 +19,12 @@ from FlexSensor.MeasurementRoutines.WorkerSignals import WorkerSignals
 
 class BaseMeasurementRoutine(QObject, FSBase):
 
-    def __init__(self, laser: Laser.Controller, ad2device: CaptDevice.Controller, prober: ProberController, config: FlexSensorConfig):
+    def __init__(self, prober: ProberController, config: FlexSensorConfig, *args, **kwargs):
         super().__init__()
         self.logger = self.create_new_logger(self.name)
         self.config = config
 
-        self.ad2device: CaptDevice.Controller = ad2device
-        self.laser: Laser.Controller = laser
+
         self.prober: ProberController = prober
         self.logger.debug(f"{self.prober.report_kernel_version()}")
         print(self.prober)

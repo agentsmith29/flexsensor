@@ -23,22 +23,18 @@ from Properties.WaferProperties import WaferProperties
 
 sys.path.append('./src')
 
-# from FlexSensor.FlexSensorConfig import FlexSensorConfig
-# from FlexSensor.MeasurementData.MeasuredData.SingleMeasuredData import SingleMeasuredData
-# from FlexSensor.MeasurementData.Properties.AD2CaptDeviceProperties import AD2CaptDeviceProperties
-# from FlexSensor.MeasurementData.Properties.LaserProperties import LaserProperties
-# from FlexSensor.MeasurementData.Properties.MeasurementProperties import MPropertiesFindPeaks, \
-#     MeasurementProperties, WaveguidePropertiesMZI
-# from FlexSensor.MeasurementData.Properties.WaferProperties import WaferProperties
-# from FlexSensor.MeasurementRoutines.BasemeasurementRoutine import BaseMeasurementRoutine
-# from FlexSensor.generics.VASInputFileParser import VASInputFileParser, Structure
-
 
 class MeasurementRoutine(fs.BaseMeasurementRoutine):
 
-    def __init__(self, laser: Laser, ad2device: AD2Dev, prober: Prober.Controller,
+    def __init__(self,
+                 laser: Laser,
+                 ad2device: AD2Dev,
+                 prober: Prober.Controller,
                  config: fs.FlexSensorConfig):
-        super().__init__(laser, ad2device, prober, config)
+        super().__init__(prober, config)
+
+        self.ad2device: AD2Dev = ad2device
+        self.laser: Laser.Controller = laser
 
         self.logger = logging.getLogger("Measurement Routine")
         # The signals for connecting to the UI

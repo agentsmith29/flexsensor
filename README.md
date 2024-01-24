@@ -35,7 +35,52 @@ To start the software, simply run the `examples/main.py` file.
 python main.py
 ```
 
-# Measuring using Flexsensor
+# Defining a measurement routine
+The measurement routine is defined in a python file. Each measurement routine must inherit from the `BaseMeasurementRoutine` class.
+Note that the base class has an overloaded constructor that requires the following parameters:
+- `prober`: The Prober.Controller object that is used to measure the structures
+- `config`: The FlexSensorConfig object that is used to measure the structures
+```python
+import FlexSensor as fs
+
+class MeasurementRoutine(fs.BaseMeasurementRoutine):
+
+    def __init__(prober: Prober.Controller,
+                 config: fs.FlexSensorConfig):
+        super().__init__(prober, config)
+
+    @Slot()
+    def run(self): 
+        # your code here
+```
+In the `run` method, the measurement routine is defined. 
+The `run` method is called by the `MeasurementRoutineThread` class, which is a QThread object. This allows to run the method
+in a separate thread, while the GUI remains responsive. 
+
+
+
+# Measuring using FlexSensor
+It is often useful to measure a large number of structures on a wafer. For this, the software allows to define a
+measurement routine that is executed for each structure. 
+The `vas`-File allows to define a list of structures that are measured. Thede file is parsed and passed
+to the `MeasurementRoutine` class.
+```python
+import FlexSensor as fs
+# ...
+def readVasFile(self):
+    self.parsed_file = fs.VASInputFileParser()
+    
+    selected_file, self.grouped_structures, self.bookmarks = self.parsed_file.read_file(
+         input_file='structure_file.vas'
+     )
+# ...
+```
+The `VASInputFileParser` class parses the `vas`-File and returns a list of structures that are measured.
+- `selected_file`: The selected file. In case the file is not found, the user is prompted to select a file by a file dialog.
+- `grouped_structures`: A list of structures that are measured. Each structure is a python dictionary that contains the
+  information on how to measure the structure.
+- `bookmarks`: A list of bookmarks that are defined in the `vas`-File. These bookmarks are used to create a Klayout
+  bookmark file that can be used to navigate to the structures in Klayout.
 ## Input Structure File
 The measuring process relies on a ```vas```-File that store the positions to the structures. in priciple 
 this file os a list of python dictionary in a predefined format, that allows the easy definiton
@@ -69,7 +114,7 @@ Sometimes it is useful to define a group of measurement points that are equally 
 mrr1     = {'y_in' : -1845, 'x_in' : 960, 'y_out' : -2015, 'x_out' : -155,  'num' : 6, 'spacing' : 100, 'repetitons': 200}
 ```
 
-## Setup bevore measuring
+## Setup before measuring
 1. Open the correct wafer map. 
 Open the wafer Map under **Velox** -> **WaferMap**. Load the correct wafer file and select or deselect dies you do not 
 want to capture. 
@@ -91,10 +136,9 @@ Set our fiber to the correct height. Then use the "Set Contact height". Otherwis
 This step is crucial and needed to train the output positions.
 
 
-# Lincence and usage
+# Licence and usage
 This software is licenced under the [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.de.html). 
 If you use this software for your work or in your papers please cite me the following:
-
 
 
 
