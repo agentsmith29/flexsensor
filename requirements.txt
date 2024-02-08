@@ -6,10 +6,10 @@ pyqtgraph
 pandas
 
 # Custom added packages
-git+https://github.com/agentsmith29/fstools.confighandler.git
-git+https://github.com/agentsmith29/fstools.fswidgets.git
+git+https://github.com/agentsmith29/fstools.confighandler.git@develop
+git+https://github.com/agentsmith29/fstools.fswidgets.git@develop
 git+https://github.com/agentsmith29/fs.captdevicecontrol.git@develop
-git+https://github.com/agentsmith29/fs.lasercontrol.git
+git+https://github.com/agentsmith29/fs.lasercontrol.git@develop
 git+https://gitlab.tugraz.at/flexsensor-public/mcpy.git@develop
 
 #../tools/confighandler
