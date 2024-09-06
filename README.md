@@ -140,7 +140,13 @@ This step is crucial and needed to train the output positions.
 This software is licenced under the [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.de.html). 
 If you use this software for your work or in your papers please cite me the following:
 
+# Citing
+This project is part of the Software [FlexSensor](https://github.com/agentsmith29/flexsensor) which has been published under DOI [10.2139/ssrn.4828876](https://doi.org/10.2139/ssrn.4828876).
 
+Please cite it correctly.
+```
+Schmidt, Christoph and Hinum-Wagner, Jakob Wilhelm and Klambauer, Reinhard and Bergmann, Alexander, Flexsensor: Automated Measurement Software for Rapid Photonic Circuits Capturing. Available at SSRN: https://ssrn.com/abstract=4828876 or http://dx.doi.org/10.2139/ssrn.4828876 
+```
 
 # FAQ&Issues
 This section should cover the issues that may occure during usage or development. 
