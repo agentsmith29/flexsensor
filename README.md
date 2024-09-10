@@ -13,8 +13,6 @@ An automation software for [FormFactor Cascade Summit200](https://www.formfactor
 This repository is under construction. The software is ready for deplyoment but is still in beta. 
 If you find any bugs or have any suggestions, please open an issue.
 
-![](https://upload.wikimedia.org/wikipedia/commons/f/f0/Baustelle-mittel.png)
-
 # Installation
 ## Get the source files
 Clone the repository to your local machine.
@@ -141,11 +139,27 @@ This software is licenced under the [GNU GPL v3](https://www.gnu.org/licenses/gp
 If you use this software for your work or in your papers please cite me the following:
 
 # Citing
-This project is part of the Software [FlexSensor](https://github.com/agentsmith29/flexsensor) which has been published under DOI [10.2139/ssrn.4828876](https://doi.org/10.2139/ssrn.4828876).
+This project is part of the Software [FlexSensor](https://github.com/agentsmith29/flexsensor), which has been published under DOI [https://doi.org/10.2139/ssrn.4828876](https://doi.org/10.1016/j.softx.2024.101879).
 
-Please cite it correctly.
+Example citing (IEEE):
 ```
-Schmidt, Christoph and Hinum-Wagner, Jakob Wilhelm and Klambauer, Reinhard and Bergmann, Alexander, Flexsensor: Automated Measurement Software for Rapid Photonic Circuits Capturing. Available at SSRN: https://ssrn.com/abstract=4828876 or http://dx.doi.org/10.2139/ssrn.4828876 
+[1] C. Schmidt, J. W. Hinum-Wagner, R. Klambauer, and A. Bergmann, “FlexSensor: Automated measurement software for rapid photonic circuits capturing,” SoftwareX, vol. 27, p. 101879, 2024, doi: https://doi.org/10.1016/j.softx.2024.101879.
+```
+or using a *BiBTex* 
+```bib
+@article{SCHMIDT2024101879,
+    title = {FlexSensor: Automated measurement software for rapid photonic circuits capturing},
+    journal = {SoftwareX},
+    volume = {27},
+    pages = {101879},
+    year = {2024},
+    issn = {2352-7110},
+    doi = {https://doi.org/10.1016/j.softx.2024.101879},
+    url = {https://www.sciencedirect.com/science/article/pii/S2352711024002498},
+    author = {Christoph Schmidt and Jakob Wilhelm Hinum-Wagner and Reinhard Klambauer and Alexander Bergmann},
+    keywords = {Silicon photonics, Wafer-level measurements, Measurement automation, Graphical user interface},
+    abstract = {This paper introduces the automation measurement software FlexSensor for capturing resonant spectra, an innovative and extensible software program developed explicitly for measuring and evaluating wafer-level Silicon Photonic (SiPh) circuits. Wafer-level Silicon Photonics allows the integration of numerous optical components and structures on a single wafer. However, researchers and engineers need precise and repeatable measurements to characterize them and face significant challenges when dealing with large numbers of complex systems on a single wafer. A toolchain gap hampers the measuring of such highly integrated photonic structures: While the setup necessitates the integration of an optimized hardware and software toolchain, there is neither software nor a standardized way to implement a reproducible measurement routine for a massive set of measurements. FlexSensor allows integration and control of external hardware (tunable lasers, analog–digital converters) and supports measurement data storage and evaluation. The software enables researchers and engineers to efficiently analyze the spectral response of photonic structures and facilitate rapid measuring.}
+}
 ```
 
 # FAQ&Issues
