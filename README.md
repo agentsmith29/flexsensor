@@ -1,23 +1,28 @@
 
 # Flexsensor
 
-
-
-
 An automation software for [FormFactor Cascade Summit200](https://www.formfactor.com/product/probe-systems/200-mm-systems/summit200/) Probe Stations.
-*FlexSensor* is a software that allows to automate measurements using the FormFactor Wafer Prober.
+*FlexSensor* is a software that automates measurements using the FormFactor Wafer Prober.
 
-*FlexSensor* is a standalone Python application. Its versatility allows for immediate deployment, without prior programming knowledge. Particularly noteworthy are its post-processing capabilities, however, the software's core functionality is the use of the automated measurement routine to acquire the resonant spectra of photonic devices, integrated within a specialized measurement system, as detailed in Section 
+*FlexSensor* is a standalone Python application. Its versatility allows for immediate deployment without prior programming knowledge. Particularly noteworthy are its post-processing capabilities, however, the software's core functionality is the use of the automated measurement routine to acquire the resonant spectra of photonic devices integrated within a specialized measurement system, as detailed in Section 
+
+# About this project
+This work introduces the automation measurement software FlexSensor for capturing resonant spectra, an innovative and extensible software program developed explicitly for measuring and evaluating wafer-level Silicon Photonics (SiPh) circuits. Wafer-level SiPh allows the integration of numerous optical components and structures on a single wafer. However, researchers and engineers need precise and repeatable measurements to characterize them and face significant challenges when dealing with large numbers of complex systems on a single wafer. A toolchain gap hampers the measuring of such highly integrated photonic structures: While the setup necessitates the integration of an optimized hardware and software toolchain, there is neither software nor a standardized way to implement a reproducible measurement routine for a massive set of measurements. 
+
+FlexSensor allows integration and control of external hardware (tunable lasers, analog-digital converters) and supports measurement data storage and evaluation. 
+The software enables researchers and engineers to efficiently analyze the spectral response of photonic structures and facilitate rapid measuring. 
+
+This software depends on several sub-projects and serves as the control unit.
 
 ## Still under construction*
-This repository is under construction. The software is ready for deplyoment but is still in beta. 
+This repository is under construction. The software is ready for deployment but is still in beta. 
 If you find any bugs or have any suggestions, please open an issue.
 
 # Installation
 ## Get the source files
-Clone the repository to your local machine.
+Clone the repository [git@gitlab.tugraz.at:flexsensor-public/flexsensor.git](https://github.com/agentsmith29/flexsensor.git) to your local machine.
 ```bash
-git clone git@gitlab.tugraz.at:flexsensor-public/flexsensor.git
+git clone https://github.com/agentsmith29/flexsensor.git
 ```
 
 Create a virtual environment (highly recommended) and install the dependencies.
@@ -28,13 +33,13 @@ pip install -r requirements.txt
 ```
 
 # Starting the software
-To start the software, simply run the `examples/main.py` file. 
+To start the software, run the [`./examples/main.py`](https://github.com/agentsmith29/flexsensor/blob/main/examples/main.py) file. 
 ```python
 python main.py
 ```
 
 # Defining a measurement routine
-The measurement routine is defined in a python file. Each measurement routine must inherit from the `BaseMeasurementRoutine` class.
+The measurement routine is defined in a Python file (e.g., [./examples/MeasurementRoutine.py](https://github.com/agentsmith29/flexsensor/blob/main/examples/MeasurementRoutine.py)). Each measurement routine must be inherited from [`BaseMeasurementRoutine`](https://github.com/agentsmith29/flexsensor/blob/main/src/FlexSensor/MeasurementRoutines/BaseMeasurementRoutine.py) class.
 Note that the base class has an overloaded constructor that requires the following parameters:
 - `prober`: The Prober.Controller object that is used to measure the structures
 - `config`: The FlexSensorConfig object that is used to measure the structures
@@ -135,8 +140,8 @@ This step is crucial and needed to train the output positions.
 
 
 # Licence and usage
-This software is licenced under the [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.de.html). 
-If you use this software for your work or in your papers please cite me the following:
+This software is licensed under the [GNU GPL v3](https://www.gnu.org/licenses/gpl-3.0.de.html). 
+If you use this software for your work or in your papers, please cite the following:
 
 # Citing
 This project is part of the Software [FlexSensor](https://github.com/agentsmith29/flexsensor), which has been published under DOI [https://doi.org/10.2139/ssrn.4828876](https://doi.org/10.1016/j.softx.2024.101879).
@@ -163,7 +168,8 @@ or using a *BiBTex*
 ```
 
 # FAQ&Issues
-This section should cover the issues that may occure during usage or development. 
+This section should cover the issues that may occur during usage or development. 
+
 ## Installation issues and running
 There are some combinations of pyside6 and pyqtgraph that may lead to incompatibility
 issues. Especially `PySide 6.5.0` and `pyqtgraph 0.13.2` installation lead to 
