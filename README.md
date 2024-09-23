@@ -14,6 +14,9 @@ The software enables researchers and engineers to efficiently analyze the spectr
 
 This software depends on several sub-projects and serves as the control unit.
 
+![Exemplaric Setup](resources/images/paper_images/exemplaric_setup.png)
+
+
 ## Still under construction*
 This repository is under construction. The software is ready for deployment but is still in beta. 
 If you find any bugs or have any suggestions, please open an issue.
